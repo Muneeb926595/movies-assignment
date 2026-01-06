@@ -8,6 +8,7 @@ export * from './error-boundary';
 export * from './icon';
 export * from './text';
 export * from './toast';
+export * from './video-player';
 
 // Movie components
 export * from './movie-card';

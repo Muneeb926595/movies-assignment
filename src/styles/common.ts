@@ -50,7 +50,7 @@ export const Card = styled.View`
   shadow-color: #000;
   shadow-offset: 0px 1px;
   shadow-opacity: 0.18;
-  shadow-radius: 1.0px;
+  shadow-radius: 1px;
   elevation: 2;
 `;
 
@@ -162,7 +162,7 @@ export const PrimaryButton = styled.TouchableOpacity<{ disabled?: boolean }>`
   shadow-color: #000;
   shadow-offset: 0px 1px;
   shadow-opacity: 0.18;
-  shadow-radius: 1.0px;
+  shadow-radius: 1px;
   elevation: 2;
 `;
 

@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   ActivityIndicator,
   ScrollView as RNScrollView,
 } from 'react-native';
 import { useTheme } from 'styled-components/native';
-import { useMovieDetails, useMovieCast } from '../../../../react-query/movies';
+import {
+  useMovieDetails,
+  useMovieCast,
+  useMovieVideos,
+} from '../../../../react-query/movies';
 import { ScreenProps } from '../../../../navigation/types';
 import FastImage from '@d11/react-native-fast-image';
 import { getImageUrl } from '../../../../api/endpoints/movies';
 import { useMoviesStore } from '../../../../stores';
-import { AppIcon } from '../../../components';
+import { AppIcon, VideoPlayer } from '../../../components';
 import { AppIconName, AppIconSize } from '../../../components/icon/types';
 import { formatRating } from '../../../components/movie-card/utils';
 import {
@@ -53,11 +57,19 @@ export const MovieDetailScreen = ({
 }: ScreenProps<'MovieDetailScreen'>) => {
   const { movieId } = route.params;
   const theme = useTheme();
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
 
   const { data: movie, isLoading, error } = useMovieDetails(movieId);
   const { data: cast } = useMovieCast(movieId);
+  const { data: videos } = useMovieVideos(movieId);
   const { isFavourite, addToFavourites, removeFromFavourites } =
     useMoviesStore();
+
+  // Get the first YouTube trailer
+  const trailer =
+    videos?.find(
+      video => video.type === 'Trailer' && video.site === 'YouTube',
+    ) || videos?.[0];
 
   const handleToggleFavourite = () => {
     if (isFavourite(movieId)) {
@@ -123,12 +135,14 @@ export const MovieDetailScreen = ({
             />
           </FavouriteButton>
 
-          <PlayButtonContainer>
-            <PlayButton>
-              <PlayButtonText>▶</PlayButtonText>
-            </PlayButton>
-            <PlayButtonLabel>Play Trailer</PlayButtonLabel>
-          </PlayButtonContainer>
+          {trailer && (
+            <PlayButtonContainer>
+              <PlayButton onPress={() => setShowVideoPlayer(true)}>
+                <PlayButtonText>▶</PlayButtonText>
+              </PlayButton>
+              <PlayButtonLabel>Play Trailer</PlayButtonLabel>
+            </PlayButtonContainer>
+          )}
         </BackdropContainer>
       )}
 
@@ -213,6 +227,14 @@ export const MovieDetailScreen = ({
           </Section>
         )}
       </ContentContainer>
+
+      {trailer && (
+        <VideoPlayer
+          videoKey={trailer.key}
+          visible={showVideoPlayer}
+          onClose={() => setShowVideoPlayer(false)}
+        />
+      )}
     </RNScrollView>
   );
 };

@@ -65,7 +65,7 @@ export const PlayButtonContainer = styled.View`
   align-items: center;
 `;
 
-export const PlayButton = styled.View`
+export const PlayButton = styled.TouchableOpacity`
   width: 60px;
   height: 60px;
   border-radius: 30px;
