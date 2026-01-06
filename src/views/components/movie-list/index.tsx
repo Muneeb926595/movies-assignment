@@ -1,9 +1,16 @@
 import React from 'react';
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
-import { useTheme } from '../../../theme';
+import { FlatList, ActivityIndicator } from 'react-native';
+import { useTheme } from 'styled-components/native';
 import { MovieCard } from '../movie-card';
 import { MovieListProps } from './types';
-import { createStyles } from './styles';
+import {
+  Container,
+  HeaderContainer,
+  Title,
+  SeeMore,
+  ListContent,
+  LoadingContainer,
+} from './styles';
 import { useMoviesStore } from '../../../stores';
 
 export const MovieList: React.FC<MovieListProps> = ({
@@ -13,9 +20,9 @@ export const MovieList: React.FC<MovieListProps> = ({
   isLoading,
   showFavouriteToggle = false,
 }) => {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
-  const { isFavourite, addToFavourites, removeFromFavourites } = useMoviesStore();
+  const theme = useTheme();
+  const { isFavourite, addToFavourites, removeFromFavourites } =
+    useMoviesStore();
 
   const handleToggleFavourite = (movieId: number) => {
     if (isFavourite(movieId)) {
@@ -27,12 +34,12 @@ export const MovieList: React.FC<MovieListProps> = ({
 
   if (isLoading) {
     return (
-      <View style={styles.container}>
-        <Text style={[styles.title, { color: theme.colors.text }]}>{title}</Text>
-        <View style={styles.loadingContainer}>
+      <Container>
+        <Title>{title}</Title>
+        <LoadingContainer>
           <ActivityIndicator color={theme.colors.primary} />
-        </View>
-      </View>
+        </LoadingContainer>
+      </Container>
     );
   }
 
@@ -41,27 +48,29 @@ export const MovieList: React.FC<MovieListProps> = ({
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={[styles.title, { color: theme.colors.text }]}>{title}</Text>
-        <Text style={[styles.seeMore, { color: theme.colors.primary }]}>See more</Text>
-      </View>
-      
+    <Container>
+      <HeaderContainer>
+        <Title>{title}</Title>
+        <SeeMore>See more</SeeMore>
+      </HeaderContainer>
+
       <FlatList
         horizontal
         data={movies}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
           <MovieCard
             movie={item}
             onPress={onMoviePress}
             isFavourite={isFavourite(item.id)}
-            onToggleFavourite={showFavouriteToggle ? handleToggleFavourite : undefined}
+            onToggleFavourite={
+              showFavouriteToggle ? handleToggleFavourite : undefined
+            }
           />
         )}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={ListContent}
       />
-    </View>
+    </Container>
   );
 };

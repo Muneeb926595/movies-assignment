@@ -1,6 +1,6 @@
-import { View, StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 import React from 'react';
-import { styles } from './styles';
+import { DividerContainer } from './styles';
 
 type Props = {
   dividerStyles?: StyleProp<ViewStyle>;
@@ -8,5 +8,5 @@ type Props = {
 
 export const Divider = (props: Props) => {
   const { dividerStyles } = props;
-  return <View style={[styles.container, dividerStyles]} />;
+  return <DividerContainer style={dividerStyles} />;
 };

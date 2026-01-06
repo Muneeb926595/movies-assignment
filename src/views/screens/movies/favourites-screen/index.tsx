@@ -1,20 +1,23 @@
 import React, { useMemo } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { useTheme } from '../../../../theme';
+import { FlatList } from 'react-native';
 import { useMoviesStore } from '../../../../stores';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { MainStackParamList } from '../../../../navigation/types';
+import { TabScreenProps } from '../../../../navigation/types';
 import { MovieCard } from '../../../components/movie-card';
 import { usePopularMovies } from '../../../../react-query/movies';
+import {
+  Container,
+  Header,
+  EmptyContainer,
+  EmptyText,
+  EmptySubtext,
+  ListContent,
+  Row,
+  CardWrapper,
+} from './styles';
 
-type NavigationProp = NativeStackNavigationProp<MainStackParamList>;
-
-export const FavouritesScreen = () => {
-  const { theme } = useTheme();
-  const navigation = useNavigation<NavigationProp>();
+export const FavouritesScreen = (props: TabScreenProps<'Favourites'>) => {
   const { favourites, isFavourite, removeFromFavourites } = useMoviesStore();
-  
+
   const { data: popularMovies } = usePopularMovies(1);
 
   const favouriteMovies = useMemo(() => {
@@ -23,7 +26,7 @@ export const FavouritesScreen = () => {
   }, [popularMovies, favourites]);
 
   const handleMoviePress = (movieId: number) => {
-    navigation.navigate('MovieDetailScreen', { movieId });
+    props.navigation.navigate('MovieDetailScreen', { movieId });
   };
 
   const handleToggleFavourite = (movieId: number) => {
@@ -31,75 +34,36 @@ export const FavouritesScreen = () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Text style={[styles.header, { color: theme.colors.text }]}>Favourites</Text>
-      
+    <Container>
+      <Header>Favourites</Header>
+
       {favouriteMovies.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Text style={[styles.emptyText, { color: theme.colors.muted }]}>
-            No favourite movies yet
-          </Text>
-          <Text style={[styles.emptySubtext, { color: theme.colors.muted }]}>
+        <EmptyContainer>
+          <EmptyText>No favourite movies yet</EmptyText>
+          <EmptySubtext>
             Add movies to your favourites to see them here
-          </Text>
-        </View>
+          </EmptySubtext>
+        </EmptyContainer>
       ) : (
         <FlatList
           data={favouriteMovies}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={item => item.id.toString()}
           numColumns={2}
-          columnWrapperStyle={styles.row}
+          columnWrapperStyle={Row}
           renderItem={({ item }) => (
-            <View style={styles.cardWrapper}>
+            <CardWrapper>
               <MovieCard
                 movie={item}
                 onPress={handleMoviePress}
                 isFavourite={true}
                 onToggleFavourite={handleToggleFavourite}
               />
-            </View>
+            </CardWrapper>
           )}
-          contentContainerStyle={styles.listContent}
+          contentContainerStyle={ListContent}
           showsVerticalScrollIndicator={false}
         />
       )}
-    </View>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    padding: 16,
-    paddingTop: 60,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 32,
-  },
-  emptyText: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  emptySubtext: {
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  listContent: {
-    padding: 16,
-  },
-  row: {
-    justifyContent: 'space-between',
-  },
-  cardWrapper: {
-    marginBottom: 16,
-  },
-});

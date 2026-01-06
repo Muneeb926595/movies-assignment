@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native-unistyles';
+import styled from 'styled-components/native';
 import { Layout } from '../../../globals';
 import { Colors } from '../../../theme';
 
@@ -70,21 +70,7 @@ export const iconOptions = new Proxy({} as any, {
   },
 });
 
-export const styles = StyleSheet.create(theme => ({
-  microCircle: { ...Layout.icon.microCircle },
-  miniCircle: { ...Layout.icon.miniCircle },
-  smallCircle: {
-    ...Layout.icon.smallCircle,
-    backgroundColor: theme.colors.brand[500],
-  },
-  mediumCircle: { ...Layout.icon.mediumCircle },
-  largeCircle: { ...Layout.icon.largeCircle },
-  xlargeCircle: { ...Layout.icon.xlargeCircle },
-  xxlargeCircle: { ...Layout.icon.xxlargeCircle },
-  bigCircle: { ...Layout.icon.xxlargeCircle },
-  hugeCircle: { ...Layout.icon.hugeCircle },
-  iconPosition: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-}));
+export const IconContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+`;

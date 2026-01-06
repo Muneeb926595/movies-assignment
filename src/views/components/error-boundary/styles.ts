@@ -1,21 +1,24 @@
-import { StyleSheet } from 'react-native-unistyles';
-import { Layout } from '../../../globals';
+import styled from 'styled-components/native';
+import { wp, rf } from '../../../theme/styled-utils';
 
-export const styles = StyleSheet.create(theme => ({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: Layout.widthPercentageToDP(5),
-  },
-  title: {
-    fontSize: Layout.RFValue(18),
-    fontWeight: 'bold',
-    marginBottom: Layout.widthPercentageToDP(2.5),
-  },
-  errorMessage: {
-    marginBottom: Layout.widthPercentageToDP(5),
-    textAlign: 'center',
-    color: theme.colors.red,
-  },
-}));
+export const ErrorContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: ${wp(5)}px;
+`;
+
+export const ErrorTitle = styled.Text`
+  font-size: ${rf(18)}px;
+  font-weight: bold;
+  margin-bottom: ${wp(2.5)}px;
+  color: ${props => props.theme.colors.text};
+  font-family: ${props => props.theme.fonts.latoBold.fontFamily};
+`;
+
+export const ErrorMessage = styled.Text`
+  margin-bottom: ${wp(5)}px;
+  text-align: center;
+  color: ${props => props.theme.colors.red};
+  font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
+`;

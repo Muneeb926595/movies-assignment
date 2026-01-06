@@ -1,9 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, ActivityIndicator } from 'react-native';
-import { styles } from './styles';
+import { ActivityIndicator } from 'react-native';
 import { Props } from './types';
 import { AppText } from '../text';
-import { useUnistyles } from 'react-native-unistyles';
+import { StyledButton, ButtonLabel } from './styles';
 
 export const Button = (props: Props) => {
   const {
@@ -19,39 +18,30 @@ export const Button = (props: Props) => {
     rightIcon,
   } = props;
 
-  const { theme } = useUnistyles();
-
   const renderButtonContent = () => {
     if (loading) {
-      return <ActivityIndicator color={loaderColor || theme.colors.white} />;
+      return <ActivityIndicator color={loaderColor} />;
     }
 
     return (
       <>
         {leftIcon ? leftIcon : null}
-        <AppText style={[styles.btnLabel, btnLabelStyles]}>
-          {buttonLable}
-        </AppText>
+        <ButtonLabel style={btnLabelStyles}>{buttonLable}</ButtonLabel>
         {rightIcon ? rightIcon : null}
       </>
     );
   };
 
   return (
-    <TouchableOpacity
+    <StyledButton
       onPress={async () => {
         onPress();
       }}
-      style={[
-        styles.buttonContainer,
-        buttonContainer,
-        disabled && {
-          backgroundColor: disableBgColor ?? theme.colors.surface['100'],
-        },
-      ]}
+      style={buttonContainer}
       disabled={disabled || loading}
+      disableBgColor={disableBgColor}
     >
       {renderButtonContent()}
-    </TouchableOpacity>
+    </StyledButton>
   );
 };

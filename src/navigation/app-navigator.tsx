@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useReactNavigationDevTools } from '@rozenite/react-navigation-plugin';
@@ -12,8 +12,6 @@ import { MovieDetailScreen } from '../views/screens/movies';
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 
 export const AppNavigator = () => {
-  const routeNameRef = useRef<any>(null);
-
   useReactNavigationDevTools({ ref: navigationRef });
 
   useEffect(() => {
@@ -25,21 +23,7 @@ export const AppNavigator = () => {
   }, []);
 
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      onReady={() => {
-        routeNameRef.current = navigationRef.getCurrentRoute()?.name;
-      }}
-      onStateChange={async () => {
-        const previousRouteName = routeNameRef.current;
-        const currentRouteName = navigationRef.getCurrentRoute()?.name;
-
-        if (previousRouteName !== currentRouteName) {
-          // Track screen view here if needed
-        }
-        routeNameRef.current = currentRouteName;
-      }}
-    >
+    <NavigationContainer ref={navigationRef}>
       <MainAppStack.Navigator
         screenOptions={{
           headerShown: false,

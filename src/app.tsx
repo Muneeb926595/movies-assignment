@@ -1,9 +1,5 @@
-// Initialize Unistyles FIRST before any other imports
-import './theme/unistyles';
-
 import React, { useEffect, useState } from 'react';
 import './utils/ignore-warnings';
-import { MagicModalPortal } from 'react-native-magic-modal';
 import { useRozeniteLogger } from './utils/rozenite-logger';
 import {
   initialWindowMetrics,
@@ -11,7 +7,7 @@ import {
 } from 'react-native-safe-area-context';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import {
   getTranslationService,
   TranslationProvider,
@@ -19,35 +15,26 @@ import {
 import { Constants } from './globals';
 import { ReactQueryProvider } from './react-query/queryClient';
 import { storageService, StorageKeys } from './services/storage';
-import { initializeTheme } from './theme';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { MagicSheetPortal } from 'react-native-magic-sheet';
-import { initializeDayjsPlugins } from './utils/date-time-utils';
+import { ThemeProvider } from './theme/styled-theme-provider';
 import { ErrorBoundary } from './views/components/error-boundary';
 import { AppNavigator } from './navigation';
 import { Toaster } from 'sonner-native';
-
-initializeDayjsPlugins();
-
-if (__DEV__) {
-  //   require('../ReactotronConfig');
-}
 
 function App() {
   // Enable Rozenite DevTools plugins
   useRozeniteLogger();
 
-  const [appLocaleProviderReady, setAppLocaleProviderReady] = useState(false);
+  const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
     (async () => {
       await initAppAssets();
-      setAppLocaleProviderReady(true);
+      setIsAppReady(true);
     })();
   }, []);
 
   /**
-   * Setup and init translation service, theme
+   * Setup and init translation service
    */
   const initAppAssets = async () => {
     let appLocale = Constants.defaults.DEFAULT_APP_LOCALE;
@@ -60,51 +47,30 @@ function App() {
     }
 
     const translationService = getTranslationService();
-
-    // Parallelize initialization for faster startup
-    await Promise.all([
-      translationService.initialize(appLocale),
-      initializeTheme(),
-    ]);
+    await translationService.initialize(appLocale);
   };
 
-  return appLocaleProviderReady ? (
-    <ReactQueryProvider>
-      <TranslationProvider>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="transparent"
-          translucent
-        />
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <BottomSheetModalProvider>
+  return isAppReady ? (
+    <ThemeProvider>
+      <ReactQueryProvider>
+        <TranslationProvider>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor="transparent"
+            translucent
+          />
+          <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaProvider initialMetrics={initialWindowMetrics}>
               <ErrorBoundary>
                 <AppNavigator />
                 <Toaster />
               </ErrorBoundary>
             </SafeAreaProvider>
-            <MagicSheetPortal />
-          </BottomSheetModalProvider>
-          <View style={styles.modalsWrapper} pointerEvents="box-none">
-            <MagicModalPortal />
-          </View>
-        </GestureHandlerRootView>
-      </TranslationProvider>
-    </ReactQueryProvider>
+          </GestureHandlerRootView>
+        </TranslationProvider>
+      </ReactQueryProvider>
+    </ThemeProvider>
   ) : null;
 }
 
 export default App;
-
-const styles = StyleSheet.create({
-  modalsWrapper: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    zIndex: 9999,
-    elevation: 9999,
-  },
-});

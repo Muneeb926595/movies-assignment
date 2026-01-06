@@ -1,12 +1,25 @@
+/**
+ * MovieCard Component - Styled Components Version
+ * Displays movie poster with title, rating, and favorite toggle
+ */
+
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import FastImage from '@d11/react-native-fast-image';
-import { useTheme } from '../../../theme';
+import { useTheme } from 'styled-components/native';
 import { MovieCardProps } from './types';
-import { createStyles } from './styles';
 import { formatRating, formatYear, getMoviePosterUrl } from './utils';
 import { AppIcon } from '../icon';
 import { AppIconName, AppIconSize } from '../icon/types';
+import {
+  Card,
+  Poster,
+  PlaceholderPoster,
+  PlaceholderText,
+  InfoContainer,
+  Title,
+  RatingContainer,
+  Rating,
+  FavouriteButton,
+} from './styles';
 
 export const MovieCard: React.FC<MovieCardProps> = ({
   movie,
@@ -14,56 +27,45 @@ export const MovieCard: React.FC<MovieCardProps> = ({
   isFavourite = false,
   onToggleFavourite,
 }) => {
-  const { theme } = useTheme();
-  const styles = createStyles(theme);
+  const theme = useTheme();
   const posterUrl = getMoviePosterUrl(movie.poster_path);
 
   return (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => onPress(movie.id)}
-      activeOpacity={0.8}
-    >
+    <Card onPress={() => onPress(movie.id)} activeOpacity={0.8}>
       {posterUrl ? (
-        <FastImage
-          source={{ uri: posterUrl }}
-          style={styles.poster}
-          resizeMode="cover"
-        />
+        <Poster source={{ uri: posterUrl }} resizeMode="cover" />
       ) : (
-        <View style={styles.poster}>
-          <Text style={styles.placeholderText}>No Image</Text>
-        </View>
+        <PlaceholderPoster>
+          <PlaceholderText>No Image</PlaceholderText>
+        </PlaceholderPoster>
       )}
 
       {onToggleFavourite && (
-        <TouchableOpacity
-          style={styles.favouriteButton}
-          onPress={() => onToggleFavourite(movie.id)}
-        >
+        <FavouriteButton onPress={() => onToggleFavourite(movie.id)}>
           <AppIcon
             name={isFavourite ? AppIconName.heartbeat : AppIconName.plus}
             iconSize={AppIconSize.small}
-            color={isFavourite ? theme.colors.brand.DEFAULT : theme.colors.white}
+            color={
+              isFavourite ? theme.colors.brand.DEFAULT : theme.colors.white
+            }
           />
-        </TouchableOpacity>
+        </FavouriteButton>
       )}
 
-      <View style={styles.infoContainer}>
-        <Text style={styles.title} numberOfLines={2}>
-          {movie.title}
-        </Text>
-        <View style={styles.ratingContainer}>
+      <InfoContainer>
+        <Title numberOfLines={2}>{movie.title}</Title>
+        <RatingContainer>
           <AppIcon
             name={AppIconName.tag}
             iconSize={AppIconSize.small}
             color={theme.colors.brand.DEFAULT}
           />
-          <Text style={styles.rating}>
-            {formatRating(movie.vote_average)} • {formatYear(movie.release_date)}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
+          <Rating>
+            {formatRating(movie.vote_average)} •{' '}
+            {formatYear(movie.release_date)}
+          </Rating>
+        </RatingContainer>
+      </InfoContainer>
+    </Card>
   );
 };

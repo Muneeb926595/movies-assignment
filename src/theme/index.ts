@@ -1,54 +1,11 @@
 /**
- * Theme Module - Unistyles with Adapter Pattern
- * Single source of truth for theme management
+ * Theme Module - Simplified Styled Components Version
  */
 
-// Initialize Unistyles configuration
-import './unistyles';
+// Export theme configuration
+export * from './styled-theme-config';
+export * from './styled-theme-provider';
+export * from './styled-utils';
 
-// Re-export context API (main public interface)
-export * from './context';
-
-// Re-export service for advanced usage
-export { themeService } from './theme-service';
-export type { AnimationType, ThemeSwitchOptions } from './theme-service';
-
-// Re-export adapter types for extensibility
-export type { ThemeAdapter } from './theme-adapter';
-
-// Re-export Unistyles runtime for advanced cases
-export { UnistylesRuntime } from 'react-native-unistyles';
-
-// Re-export neon effects
-export * from './neon-effects';
-
-// Re-export theme metadata
-export { themeMetadata } from './themes';
-
-// Backwards compatibility: Colors getter
-import { UnistylesRuntime } from 'react-native-unistyles';
-export const Colors = new Proxy({} as any, {
-  get: (_, prop) => {
-    try {
-      // Check if runtime is available and has a theme
-      const currentTheme = UnistylesRuntime?.themeName;
-      if (currentTheme) {
-        const { themeMap } = require('./unistyles-theme-adapter');
-        const theme = themeMap?.[currentTheme];
-        if (theme?.colors?.[prop as string]) {
-          return theme.colors[prop as string];
-        }
-      }
-    } catch (error) {
-      // Silently catch initialization errors
-    }
-
-    // Fallback to light theme for any case
-    try {
-      const { light } = require('./themes');
-      return light?.colors?.[prop as string];
-    } catch {
-      return undefined;
-    }
-  },
-});
+// Re-export useTheme hook from styled-components
+export { useTheme } from 'styled-components/native';

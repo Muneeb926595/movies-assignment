@@ -72,28 +72,6 @@ jest.mock('react-native-mmkv', () => ({
   }),
 }));
 
-// Mock Biometrics with default export and BiometryTypes
-jest.mock('react-native-biometrics', () => {
-  const mockBiometrics = jest.fn(function () {
-    return {
-      isSensorAvailable: jest.fn(),
-      simplePrompt: jest.fn(),
-      createKeys: jest.fn(),
-      deleteKeys: jest.fn(),
-      biometricKeysExist: jest.fn(),
-    };
-  });
-  return {
-    __esModule: true,
-    default: mockBiometrics,
-    BiometryTypes: {
-      FaceID: 'FaceID',
-      TouchID: 'TouchID',
-      Biometrics: 'Biometrics',
-    },
-  };
-});
-
 // Mock Unistyles to prevent nitro-modules error
 jest.mock('react-native-unistyles', () => ({
   StyleSheet: {
@@ -112,12 +90,6 @@ jest.mock('react-native-unistyles', () => ({
   })),
 }));
 
-// Mock Image Picker
-jest.mock('react-native-image-picker', () => ({
-  launchImageLibrary: jest.fn(),
-  launchCamera: jest.fn(),
-}));
-
 // Mock Notifee
 jest.mock('@notifee/react-native', () => ({
   __esModule: true,
@@ -133,16 +105,6 @@ jest.mock('@notifee/react-native', () => ({
   TriggerType: {
     TIMESTAMP: 0,
     INTERVAL: 1,
-  },
-}));
-
-// Mock React Native Compressor
-jest.mock('react-native-compressor', () => ({
-  Image: {
-    compress: jest.fn(),
-  },
-  Video: {
-    compress: jest.fn(),
   },
 }));
 
@@ -171,19 +133,6 @@ jest.mock('axios', () => {
     },
   };
 });
-
-// Mock React Native File System (RNFS)
-jest.mock('react-native-fs', () => ({
-  TemporaryDirectoryPath: '/tmp',
-  DocumentDirectoryPath: '/documents',
-  DownloadDirectoryPath: '/downloads',
-  readFile: jest.fn(),
-  writeFile: jest.fn(),
-  unlink: jest.fn(),
-  exists: jest.fn(),
-  mkdir: jest.fn(),
-  copyFile: jest.fn(),
-}));
 
 // Silence console errors in tests (optional)
 global.console = {

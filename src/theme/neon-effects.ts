@@ -1,5 +1,5 @@
 import { ViewStyle, TextStyle } from 'react-native';
-import { Colors } from '.';
+import { Colors } from './themes';
 
 export const createNeonEffect = (
   color: string,

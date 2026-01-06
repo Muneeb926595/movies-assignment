@@ -1,6 +1,10 @@
+/**
+ * Text Components - Styled Components Version
+ * Themed text components with emphasis levels and link variants
+ */
+
 import React from 'react';
-import { ColorValue, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
+import { ColorValue } from 'react-native';
 import {
   Emphasis,
   ParagraphLinkBoldProps,
@@ -8,55 +12,45 @@ import {
   Props,
   SmallParagraphLinkProps,
 } from './types';
-
-// https://material.io/design/color/text-legibility.html#text-backgrounds
-const handleEmphasis = (emph?: Emphasis): ColorValue => {
-  switch (emph) {
-    case 'low':
-      return '#00000061'; // 38%
-    case 'high':
-      return '#000000DE'; // 87%
-    case 'medium':
-      return '#00000099'; // 60%
-    default:
-      return '#000000DE';
-  }
-};
+import {
+  StyledText,
+  LinkBoldText,
+  LinkText,
+  StyledTouchableOpacity,
+} from './styles';
 
 export const AppText: Props = props => {
-  const style = StyleSheet.compose(
-    [styles.paragraph, { color: handleEmphasis(props.emphasis) }],
-    props.style,
-  );
   return (
-    <Text {...props} allowFontScaling={false} style={style}>
+    <StyledText {...props} allowFontScaling={false} emphasis={props.emphasis}>
       {props.children}
-    </Text>
+    </StyledText>
   );
 };
 
 export const ParagraphLinkBold = (props: ParagraphLinkBoldProps) => {
   return (
-    <TouchableOpacity onPress={props?.onPress} style={props?.containerStyle}>
-      <Text style={[styles.paragraphLinkBold, props?.style]}>
-        {props?.title}
-      </Text>
-    </TouchableOpacity>
+    <StyledTouchableOpacity
+      onPress={props?.onPress}
+      style={props?.containerStyle}
+    >
+      <LinkBoldText style={props?.style}>{props?.title}</LinkBoldText>
+    </StyledTouchableOpacity>
   );
 };
+
 export const ParagraphLink = (props: ParagraphLinkProps) => {
   return (
-    <TouchableOpacity onPress={props?.onPress} style={props?.containerStyle}>
-      <Text style={[styles.paragraphLink, props?.style]}>{props?.title}</Text>
-    </TouchableOpacity>
+    <StyledTouchableOpacity
+      onPress={props?.onPress}
+      style={props?.containerStyle}
+    >
+      <LinkText style={props?.style}>{props?.title}</LinkText>
+    </StyledTouchableOpacity>
   );
 };
+
 export const SmallParagraphLink = (props: SmallParagraphLinkProps) => {
   return (
-    <Text
-      {...props}
-      onPress={() => props.onPress()}
-      style={[styles.textLink, props.style]}
-    />
+    <LinkText {...props} onPress={() => props.onPress()} style={props.style} />
   );
 };

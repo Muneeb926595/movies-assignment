@@ -1,8 +1,6 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { View } from 'react-native';
-import { styles } from './styles';
+import { ErrorContainer, ErrorTitle, ErrorMessage } from './styles';
 import { Button } from '../button';
-import { AppText } from '../text';
 import { LocaleProvider } from '../../../services/localisation';
 
 interface ErrorFallbackProps {
@@ -12,23 +10,23 @@ interface ErrorFallbackProps {
 
 export const ErrorFallback = ({ error, resetError }: ErrorFallbackProps) => {
   return (
-    <View style={styles.container}>
-      <AppText style={styles.title}>
+    <ErrorContainer>
+      <ErrorTitle>
         {LocaleProvider.formatMessage(
           LocaleProvider.IDs.message.somethingWentWrong,
         )}
-      </AppText>
-      <AppText style={styles.errorMessage}>
+      </ErrorTitle>
+      <ErrorMessage>
         {error.message ??
           "Oops! We hit a little bump in the code. Refresh and we'll get back on track!"}
-      </AppText>
+      </ErrorMessage>
       <Button
         buttonLable={LocaleProvider?.formatMessage?.(
           LocaleProvider?.IDs?.label?.tryAgain,
         )}
         onPress={resetError}
       />
-    </View>
+    </ErrorContainer>
   );
 };
 

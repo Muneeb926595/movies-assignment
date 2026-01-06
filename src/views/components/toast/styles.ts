@@ -1,43 +1,41 @@
-import { StyleSheet } from 'react-native-unistyles';
-import { Layout } from '../../../globals';
+import styled from 'styled-components/native';
+import { hp, wp, rf } from '../../../theme/styled-utils';
 
-export const styles = StyleSheet.create(theme =>
-  ({
-    container: {
-      position: 'absolute',
-      bottom: Layout.heightPercentageToDP(10),
-      left: Layout.widthPercentageToDP(5),
-      right: Layout.widthPercentageToDP(5),
-      backgroundColor: theme.colors.surface['DEFAULT'],
-      borderRadius: 8,
-      padding: Layout.heightPercentageToDP(2),
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      shadowColor: theme.colors.black,
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      zIndex: 9999,
-    },
-    message: {
-      flex: 1,
-      color: theme.colors.typography['DEFAULT'],
-      fontSize: Layout.RFValue(14),
-      marginRight: Layout.widthPercentageToDP(2),
-    },
-    actionButton: {
-      paddingHorizontal: Layout.widthPercentageToDP(3),
-      paddingVertical: Layout.heightPercentageToDP(1),
-    },
-    actionLabel: {
-      color: theme.colors.brand['DEFAULT'],
-      fontSize: Layout.RFValue(14),
-      fontWeight: '600',
-    },
-  }),
-);
+export const ToastContainer = styled.View`
+  position: absolute;
+  bottom: ${hp(10)}px;
+  left: ${wp(5)}px;
+  right: ${wp(5)}px;
+  background-color: ${props => props.theme.colors.surface.DEFAULT};
+  border-radius: 8px;
+  padding: ${hp(2)}px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9999;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 3.84px;
+  elevation: 5;
+`;
+
+export const ToastMessage = styled.Text`
+  flex: 1;
+  color: ${props => props.theme.colors.text};
+  font-size: ${rf(14)}px;
+  margin-right: ${wp(2)}px;
+  font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
+`;
+
+export const ActionButton = styled.TouchableOpacity`
+  padding-horizontal: ${wp(3)}px;
+  padding-vertical: ${hp(1)}px;
+`;
+
+export const ActionLabel = styled.Text`
+  color: ${props => props.theme.colors.brand.DEFAULT};
+  font-size: ${rf(14)}px;
+  font-weight: 600;
+  font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
+`;

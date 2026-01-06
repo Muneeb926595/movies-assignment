@@ -1,51 +1,62 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
+import FastImage from '@d11/react-native-fast-image';
 
-export const createStyles = (theme: any) =>
-  StyleSheet.create({
-    card: {
-      width: 150,
-      marginRight: 12,
-      borderRadius: 8,
-      overflow: 'hidden',
-      backgroundColor: theme.colors.surface.DEFAULT,
-    },
-    poster: {
-      width: '100%',
-      height: 225,
-      backgroundColor: theme.colors.surface['100'],
-    },
-    infoContainer: {
-      padding: 8,
-    },
-    title: {
-      fontSize: 14,
-      fontWeight: '600',
-      color: theme.colors.text,
-      marginBottom: 4,
-    },
-    ratingContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    rating: {
-      fontSize: 12,
-      color: theme.colors.muted,
-      marginLeft: 4,
-    },
-    favouriteButton: {
-      position: 'absolute',
-      top: 8,
-      right: 8,
-      backgroundColor: 'rgba(0, 0, 0, 0.6)',
-      borderRadius: 20,
-      padding: 6,
-    },
-    placeholderText: {
-      position: 'absolute',
-      top: '50%',
-      left: 0,
-      right: 0,
-      textAlign: 'center',
-      color: theme.colors.muted,
-    },
-  });
+export const Card = styled.TouchableOpacity`
+  width: 160px;
+  margin-right: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: ${props => props.theme.colors.surface.DEFAULT};
+`;
+
+export const Poster = styled(FastImage)`
+  width: 100%;
+  height: 225px;
+  background-color: ${props => props.theme.colors.surface[100]};
+`;
+
+export const PlaceholderPoster = styled.View`
+  width: 100%;
+  height: 225px;
+  background-color: ${props => props.theme.colors.surface[100]};
+  justify-content: center;
+  align-items: center;
+`;
+
+export const PlaceholderText = styled.Text`
+  color: ${props => props.theme.colors.muted};
+  text-align: center;
+`;
+
+export const InfoContainer = styled.View`
+  padding: 8px;
+`;
+
+export const Title = styled.Text`
+  font-size: 14px;
+  font-weight: 600;
+  color: ${props => props.theme.colors.text};
+  margin-bottom: 4px;
+  font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
+`;
+
+export const RatingContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const Rating = styled.Text`
+  font-size: 12px;
+  color: ${props => props.theme.colors.muted};
+  margin-left: 4px;
+  font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
+`;
+
+export const FavouriteButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  padding: 6px;
+`;

@@ -1,15 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View } from 'react-native';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
-import { styles } from './styles';
 import { ComponentType } from 'react';
 import {
   MoviesScreen,
   FavouritesScreen,
   SearchScreen,
 } from '../../views/screens/movies';
-import { useTheme } from '../../theme';
+import { useTheme } from 'styled-components/native';
 import { Layout } from '../../globals';
 import { AppIcon } from '../../views/components';
 import { AppIconName, AppIconSize } from '../../views/components/icon/types';
@@ -74,7 +72,7 @@ const renderTabIcon = (iconName: AppIconName, color: string) => (
 );
 
 export const TabsNavigator = () => {
-  const { theme } = useTheme();
+  const theme = useTheme();
 
   return (
     <MainTabs.Navigator

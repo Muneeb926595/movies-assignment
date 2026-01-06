@@ -1,18 +1,3 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
-import isToday from 'dayjs/plugin/isToday';
-import isTomorrow from 'dayjs/plugin/isTomorrow';
-import isYesterday from 'dayjs/plugin/isYesterday';
-
-export const initializeDayjsPlugins = () => {
-  dayjs.extend(utc);
-  dayjs.extend(isToday);
-  dayjs.extend(isTomorrow);
-  dayjs.extend(isYesterday);
-  dayjs.extend(timezone);
-};
-
 // to convert backend date object into frontend calendar object
 export const convertDateStringToObj = (dateString: any) => {
   if (dateString) {
@@ -38,26 +23,4 @@ export const convertDateStringToObj = (dateString: any) => {
   } else {
     return null;
   }
-};
-
-export const formatTodoDateTime = (
-  date: Date | number | string,
-  timeFormat = 'HH:mm',
-) => {
-  // Parse the timestamp in local timezone
-  const d = dayjs(date);
-
-  if (d.isToday()) {
-    return `Today At ${d.format(timeFormat)}`;
-  }
-
-  if (d.isTomorrow()) {
-    return `Tomorrow At ${d.format(timeFormat)}`;
-  }
-
-  if (d.isYesterday()) {
-    return `Yesterday At ${d.format(timeFormat)}`;
-  }
-
-  return d.format(`DD MMM YYYY [At] ${timeFormat}`);
 };

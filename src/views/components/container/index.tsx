@@ -1,21 +1,22 @@
+/**
+ * Container Component - Styled Components Version
+ * Main screen container with keyboard handling and scroll support
+ */
+
 import React from 'react';
 import {
   KeyboardAvoidingView,
   StatusBar,
   ScrollView,
   Platform,
-  View,
-  ImageBackground,
 } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
-
-import { styles } from './styles';
 import { Props } from './types';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme } from '../../../theme';
+import { useTheme } from 'styled-components/native';
+import { ScreenContainer, BodyContainer, BackgroundImageStyle } from './styles';
 
 export const Container = (props: Props) => {
-  const { theme } = useTheme();
+  const theme = useTheme();
   const {
     hasScroll,
     bounces,
@@ -32,28 +33,21 @@ export const Container = (props: Props) => {
   const isAndroid = Platform.OS === 'android';
 
   const BaseBodyContainer = (
-    <View style={[styles.bodyContainer, containerStyles]} {...props} />
+    <BodyContainer style={containerStyles} {...props} />
   );
 
   const BodyContent =
     options && options.backgroundImage ? (
-      <ImageBackground
-        source={options.backgroundImage}
-        style={styles.backgroundImageStyle}
-      >
+      <BackgroundImageStyle source={options.backgroundImage}>
         {BaseBodyContainer}
-      </ImageBackground>
+      </BackgroundImageStyle>
     ) : (
       BaseBodyContainer
     );
 
   return (
-    <SafeAreaView
-      style={[
-        styles.screenContainer,
-        { backgroundColor: theme.colors.background },
-        screenBackgroundStyle,
-      ]}
+    <ScreenContainer
+      style={screenBackgroundStyle}
       edges={insetsToHandle ?? ['top', 'bottom', 'left', 'right']}
     >
       <KeyboardAvoidingView
@@ -80,6 +74,6 @@ export const Container = (props: Props) => {
           <>{BodyContent}</>
         )}
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 };

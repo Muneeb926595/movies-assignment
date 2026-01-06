@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Text, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
+import { Animated } from 'react-native';
+import {
+  ToastContainer,
+  ToastMessage,
+  ActionButton,
+  ActionLabel,
+} from './styles';
 
 export interface ToastProps {
   message: string;
@@ -73,22 +78,18 @@ export const Toast: React.FC<ToastProps> = ({
 
   return (
     <Animated.View
-      style={[
-        styles.container,
-        {
-          transform: [{ translateY }],
-        },
-      ]}
+      style={{
+        transform: [{ translateY }],
+      }}
     >
-      <Text style={styles.message}>{message}</Text>
-      {actionLabel && onActionPress && (
-        <TouchableOpacity
-          onPress={handleActionPress}
-          style={styles.actionButton}
-        >
-          <Text style={styles.actionLabel}>{actionLabel}</Text>
-        </TouchableOpacity>
-      )}
+      <ToastContainer>
+        <ToastMessage>{message}</ToastMessage>
+        {actionLabel && onActionPress && (
+          <ActionButton onPress={handleActionPress}>
+            <ActionLabel>{actionLabel}</ActionLabel>
+          </ActionButton>
+        )}
+      </ToastContainer>
     </Animated.View>
   );
 };

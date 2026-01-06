@@ -4,8 +4,7 @@ import { createIconSet } from 'react-native-vector-icons';
 
 import icons from '../../../assets/images/app-icons.json';
 import { Props, AppIconSize } from './types';
-import { iconOptions, styles } from './styles';
-import { View } from 'react-native';
+import { iconOptions, IconContainer } from './styles';
 
 const Icon = createIconSet(icons, 'UpTodo', 'UpTodo.ttf');
 
@@ -25,9 +24,8 @@ export const AppIcon = ({
     }
   };
   return (
-    <View
+    <IconContainer
       style={[
-        styles.iconPosition,
         style,
         {
           backgroundColor:
@@ -46,6 +44,6 @@ export const AppIcon = ({
             : iconOptions.default.color
         }
       />
-    </View>
+    </IconContainer>
   );
 };

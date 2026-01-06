@@ -152,3 +152,6 @@ export const themeMetadata = {
     icon: '🌙',
   },
 };
+
+// Export Colors for backward compatibility
+export const Colors = light.colors;

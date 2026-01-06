@@ -1,26 +1,28 @@
-import { StyleSheet } from 'react-native-unistyles';
-import { Fonts, Layout } from '../../globals';
+import styled from 'styled-components/native';
 
-export const styles = StyleSheet.create(theme => ({
-  headerTitle: {
-    ...Fonts.latoBold,
-    fontSize: Layout.RFValue(26),
-  },
-  addButtonContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: Layout.heightPercentageToDP(4),
-  },
-  floatingButton: {
-    width: Layout.widthPercentageToDP(16),
-    height: Layout.widthPercentageToDP(16),
-    borderRadius: 100,
-    backgroundColor: theme.colors.brand.DEFAULT,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: theme.colors.brand.DEFAULT,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.9,
-  },
-}));
+export const HeaderTitle = styled.Text`
+  font-family: Lato-Bold;
+  font-weight: bold;
+  font-size: 26px;
+`;
+
+export const AddButtonContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 32px;
+`;
+
+export const FloatingButton = styled.TouchableOpacity`
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  background-color: ${({ theme }) => theme.colors.brand.DEFAULT};
+  justify-content: center;
+  align-items: center;
+  shadow-color: ${({ theme }) => theme.colors.brand.DEFAULT};
+  shadow-offset: 0px 0px;
+  shadow-opacity: 0.9;
+  shadow-radius: 10px;
+  elevation: 5;
+`;

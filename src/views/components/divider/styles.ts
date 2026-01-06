@@ -1,10 +1,8 @@
-import { StyleSheet } from 'react-native-unistyles';
-import { Layout } from '../../../globals';
+import styled from 'styled-components/native';
+import { hp } from '../../../theme/styled-utils';
 
-export const styles = StyleSheet.create(theme => ({
-  container: {
-    height: Layout.heightPercentageToDP(0.1),
-    width: '100%',
-    backgroundColor: theme.colors.borders.DEFAULT,
-  },
-}));
+export const DividerContainer = styled.View`
+  height: ${hp(0.1)}px;
+  width: 100%;
+  background-color: ${props => props.theme.colors.borders.DEFAULT};
+`;
