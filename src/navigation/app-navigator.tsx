@@ -7,7 +7,7 @@ import { navigationRef } from './navigation-utils';
 import { MainStackParamList } from './types';
 import { hideSplash } from 'react-native-splash-view';
 import { TabsNavigator } from './tab-navigator';
-import { MovieDetailScreen } from '../views/screens/movies';
+import { MovieDetailScreen } from '../views/screens';
 
 const MainAppStack = createNativeStackNavigator<MainStackParamList>();
 

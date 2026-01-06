@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
-import {
-  Modal,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
+import { Modal, StatusBar } from 'react-native';
 import YoutubeIframe from 'react-native-youtube-iframe';
 import { useTheme } from 'styled-components/native';
 import { AppIcon } from '../icon';
 import { AppIconName, AppIconSize } from '../icon/types';
-import {
-  ModalContainer,
-  VideoContainer,
-  CloseButton,
-} from './styles';
+import { ModalContainer, VideoContainer, CloseButton } from './styles';
 
 interface VideoPlayerProps {
   videoKey: string;

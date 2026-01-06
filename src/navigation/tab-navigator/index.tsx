@@ -2,15 +2,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { ComponentType } from 'react';
-import {
-  MoviesScreen,
-  FavouritesScreen,
-  SearchScreen,
-} from '../../views/screens/movies';
 import { useTheme } from 'styled-components/native';
 import { Layout } from '../../globals';
 import { AppIcon } from '../../views/components';
 import { AppIconName, AppIconSize } from '../../views/components/icon/types';
+import {
+  FavouritesScreen,
+  MoviesScreen,
+  SearchScreen,
+} from '../../views/screens';
 
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
