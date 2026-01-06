@@ -22,10 +22,10 @@ import { storageService, StorageKeys } from './services/storage';
 import { initializeTheme } from './theme';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { MagicSheetPortal } from 'react-native-magic-sheet';
-import { ToastProvider } from './context/toast-context';
 import { initializeDayjsPlugins } from './utils/date-time-utils';
 import { ErrorBoundary } from './views/components/error-boundary';
 import { AppNavigator } from './navigation';
+import { Toaster } from 'sonner-native';
 
 initializeDayjsPlugins();
 
@@ -71,26 +71,25 @@ function App() {
   return appLocaleProviderReady ? (
     <ReactQueryProvider>
       <TranslationProvider>
-        <ToastProvider>
-          <StatusBar
-            barStyle="light-content"
-            backgroundColor="transparent"
-            translucent
-          />
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <BottomSheetModalProvider>
-              <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-                <ErrorBoundary>
-                  <AppNavigator />
-                </ErrorBoundary>
-              </SafeAreaProvider>
-              <MagicSheetPortal />
-            </BottomSheetModalProvider>
-            <View style={styles.modalsWrapper} pointerEvents="box-none">
-              <MagicModalPortal />
-            </View>
-          </GestureHandlerRootView>
-        </ToastProvider>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="transparent"
+          translucent
+        />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+              <ErrorBoundary>
+                <AppNavigator />
+                <Toaster />
+              </ErrorBoundary>
+            </SafeAreaProvider>
+            <MagicSheetPortal />
+          </BottomSheetModalProvider>
+          <View style={styles.modalsWrapper} pointerEvents="box-none">
+            <MagicModalPortal />
+          </View>
+        </GestureHandlerRootView>
       </TranslationProvider>
     </ReactQueryProvider>
   ) : null;

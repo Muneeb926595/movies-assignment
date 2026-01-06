@@ -9769,6 +9769,11 @@ socks@^2.6.2:
     ip-address "^10.0.1"
     smart-buffer "^4.2.0"
 
+sonner-native@^0.22.2:
+  version "0.22.2"
+  resolved "https://registry.yarnpkg.com/sonner-native/-/sonner-native-0.22.2.tgz#69ee64073f55c19d301b35ffb405d961c576108f"
+  integrity sha512-yboVB3EWPyEs8w3nC+mKio3Tr5uMEHVCGi5ko4ibemNEVxNKpZ4nIM0zMTTrh4R0Ihm3n11unDJN8K44eXZLlw==
+
 source-map-support@0.5.13:
   version "0.5.13"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.13.tgz#31b24a9c2e73c2de85066c0feb7d44767ed52932"

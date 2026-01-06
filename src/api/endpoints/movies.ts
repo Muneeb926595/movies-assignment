@@ -1,25 +1,15 @@
-import axios from 'axios';
 import {
-  Movie,
   MovieDetails,
   MoviesResponse,
   Cast,
   Video,
 } from '../../types/movie.types';
 import { TMDB_CONFIG, getApiKey } from '../config/tmdb.config';
-
-const tmdbAxios = axios.create({
-  baseURL: TMDB_CONFIG.BASE_URL,
-  timeout: 30_000,
-  headers: { 'Content-Type': 'application/json' },
-});
+import axiosClient from '../axios/axios-client';
 
 export const moviesEndpoints = {
-  /**
-   * Get popular movies
-   */
   getPopularMovies: async (page = 1): Promise<MoviesResponse> => {
-    const response = await tmdbAxios.get<MoviesResponse>('/movie/popular', {
+    const response = await axiosClient.get<MoviesResponse>('/movie/popular', {
       params: {
         api_key: getApiKey(),
         page,
@@ -28,11 +18,8 @@ export const moviesEndpoints = {
     return response.data;
   },
 
-  /**
-   * Get now playing movies
-   */
   getNowPlayingMovies: async (page = 1): Promise<MoviesResponse> => {
-    const response = await tmdbAxios.get<MoviesResponse>(
+    const response = await axiosClient.get<MoviesResponse>(
       '/movie/now_playing',
       {
         params: {
@@ -44,11 +31,8 @@ export const moviesEndpoints = {
     return response.data;
   },
 
-  /**
-   * Get upcoming movies
-   */
   getUpcomingMovies: async (page = 1): Promise<MoviesResponse> => {
-    const response = await tmdbAxios.get<MoviesResponse>('/movie/upcoming', {
+    const response = await axiosClient.get<MoviesResponse>('/movie/upcoming', {
       params: {
         api_key: getApiKey(),
         page,
@@ -57,27 +41,18 @@ export const moviesEndpoints = {
     return response.data;
   },
 
-  /**
-   * Get top rated movies
-   */
   getTopRatedMovies: async (page = 1): Promise<MoviesResponse> => {
-    const response = await tmdbAxios.get<MoviesResponse>(
-      '/movie/top_rated',
-      {
-        params: {
-          api_key: getApiKey(),
-          page,
-        },
+    const response = await axiosClient.get<MoviesResponse>('/movie/top_rated', {
+      params: {
+        api_key: getApiKey(),
+        page,
       },
-    );
+    });
     return response.data;
   },
 
-  /**
-   * Search movies
-   */
   searchMovies: async (query: string, page = 1): Promise<MoviesResponse> => {
-    const response = await tmdbAxios.get<MoviesResponse>('/search/movie', {
+    const response = await axiosClient.get<MoviesResponse>('/search/movie', {
       params: {
         api_key: getApiKey(),
         query,
@@ -87,11 +62,8 @@ export const moviesEndpoints = {
     return response.data;
   },
 
-  /**
-   * Get movie details
-   */
   getMovieDetails: async (movieId: number): Promise<MovieDetails> => {
-    const response = await tmdbAxios.get<MovieDetails>(`/movie/${movieId}`, {
+    const response = await axiosClient.get<MovieDetails>(`/movie/${movieId}`, {
       params: {
         api_key: getApiKey(),
       },
@@ -99,11 +71,8 @@ export const moviesEndpoints = {
     return response.data;
   },
 
-  /**
-   * Get movie cast
-   */
   getMovieCast: async (movieId: number): Promise<Cast[]> => {
-    const response = await tmdbAxios.get<{ cast: Cast[] }>(
+    const response = await axiosClient.get<{ cast: Cast[] }>(
       `/movie/${movieId}/credits`,
       {
         params: {
@@ -114,11 +83,8 @@ export const moviesEndpoints = {
     return response.data.cast;
   },
 
-  /**
-   * Get movie videos (trailers)
-   */
   getMovieVideos: async (movieId: number): Promise<Video[]> => {
-    const response = await tmdbAxios.get<{ results: Video[] }>(
+    const response = await axiosClient.get<{ results: Video[] }>(
       `/movie/${movieId}/videos`,
       {
         params: {
@@ -129,11 +95,11 @@ export const moviesEndpoints = {
     return response.data.results;
   },
 
-  /**
-   * Get similar movies
-   */
-  getSimilarMovies: async (movieId: number, page = 1): Promise<MoviesResponse> => {
-    const response = await tmdbAxios.get<MoviesResponse>(
+  getSimilarMovies: async (
+    movieId: number,
+    page = 1,
+  ): Promise<MoviesResponse> => {
+    const response = await axiosClient.get<MoviesResponse>(
       `/movie/${movieId}/similar`,
       {
         params: {

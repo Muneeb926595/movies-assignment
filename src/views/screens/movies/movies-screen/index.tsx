@@ -1,6 +1,18 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, FlatList, Dimensions, ActivityIndicator } from 'react-native';
-import { useNowPlayingMovies, usePopularMovies } from '../../../../react-query/movies';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
+import {
+  useNowPlayingMovies,
+  usePopularMovies,
+} from '../../../../react-query/movies';
 import { useTheme } from '../../../../theme';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -21,7 +33,8 @@ export const MoviesScreen = () => {
   const { theme } = useTheme();
   const navigation = useNavigation<NavigationProp>();
 
-  const { data: nowPlaying, isLoading: loadingNowPlaying } = useNowPlayingMovies(1);
+  const { data: nowPlaying, isLoading: loadingNowPlaying } =
+    useNowPlayingMovies(1);
   const { data: popular, isLoading: loadingPopular } = usePopularMovies(1);
 
   const handleMoviePress = (movieId: number) => {
@@ -29,7 +42,7 @@ export const MoviesScreen = () => {
   };
 
   const renderNowShowingItem = ({ item }: { item: Movie }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.nowShowingCard}
       onPress={() => handleMoviePress(item.id)}
       activeOpacity={0.8}
@@ -39,7 +52,10 @@ export const MoviesScreen = () => {
         style={styles.nowShowingPoster}
         resizeMode="cover"
       />
-      <Text style={[styles.nowShowingTitle, { color: theme.colors.text }]} numberOfLines={2}>
+      <Text
+        style={[styles.nowShowingTitle, { color: theme.colors.text }]}
+        numberOfLines={2}
+      >
         {item.title}
       </Text>
       <View style={styles.ratingRow}>
@@ -53,10 +69,13 @@ export const MoviesScreen = () => {
 
   const renderPopularItem = ({ item }: { item: Movie }) => {
     const genres = item.genre_ids?.slice(0, 3) || [];
-    
+
     return (
-      <TouchableOpacity 
-        style={[styles.popularCard, { backgroundColor: theme.colors.surface[50] }]}
+      <TouchableOpacity
+        style={[
+          styles.popularCard,
+          { backgroundColor: theme.colors.surface[50] },
+        ]}
         onPress={() => handleMoviePress(item.id)}
         activeOpacity={0.8}
       >
@@ -66,7 +85,10 @@ export const MoviesScreen = () => {
           resizeMode="cover"
         />
         <View style={styles.popularInfo}>
-          <Text style={[styles.popularTitle, { color: theme.colors.text }]} numberOfLines={2}>
+          <Text
+            style={[styles.popularTitle, { color: theme.colors.text }]}
+            numberOfLines={2}
+          >
             {item.title}
           </Text>
           <View style={styles.ratingRow}>
@@ -78,11 +100,16 @@ export const MoviesScreen = () => {
           {genres.length > 0 && (
             <View style={styles.genresRow}>
               {genres.map((genreId, index) => (
-                <View 
-                  key={genreId} 
-                  style={[styles.genreTag, { backgroundColor: theme.colors.primary + '20' }]}
+                <View
+                  key={genreId}
+                  style={[
+                    styles.genreTag,
+                    { backgroundColor: theme.colors.primary + '20' },
+                  ]}
                 >
-                  <Text style={[styles.genreText, { color: theme.colors.primary }]}>
+                  <Text
+                    style={[styles.genreText, { color: theme.colors.primary }]}
+                  >
                     {getGenreName(genreId)}
                   </Text>
                 </View>
@@ -90,8 +117,14 @@ export const MoviesScreen = () => {
             </View>
           )}
           <View style={styles.durationRow}>
-            <AppIcon name={AppIconName.clock} iconSize={16} color={theme.colors.muted} />
-            <Text style={[styles.duration, { color: theme.colors.muted }]}>1h 47m</Text>
+            <AppIcon
+              name={AppIconName.clock}
+              iconSize={16}
+              color={theme.colors.muted}
+            />
+            <Text style={[styles.duration, { color: theme.colors.muted }]}>
+              1h 47m
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -99,40 +132,70 @@ export const MoviesScreen = () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.menuButton}>
-          <AppIcon name={AppIconName.homeTab} iconSize={AppIconSize.medium} color={theme.colors.text} />
+          <AppIcon
+            name={AppIconName.homeTab}
+            iconSize={AppIconSize.medium}
+            color={theme.colors.text}
+          />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>FilmKu</Text>
+        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
+          FilmKu
+        </Text>
         <TouchableOpacity style={styles.notificationButton}>
-          <AppIcon name={AppIconName.announcement} iconSize={AppIconSize.medium} color={theme.colors.text} />
-          <View style={[styles.notificationDot, { backgroundColor: theme.colors.red }]} />
+          <AppIcon
+            name={AppIconName.announcement}
+            iconSize={AppIconSize.medium}
+            color={theme.colors.text}
+          />
+          <View
+            style={[
+              styles.notificationDot,
+              { backgroundColor: theme.colors.red },
+            ]}
+          />
         </TouchableOpacity>
       </View>
 
-      <ScrollView 
+      <ScrollView
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
       >
         {/* Now Showing Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Now Showing</Text>
-            <TouchableOpacity style={[styles.seeMoreButton, { borderColor: theme.colors.borders.DEFAULT }]}>
-              <Text style={[styles.seeMoreText, { color: theme.colors.muted }]}>See more</Text>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+              Now Showing
+            </Text>
+            <TouchableOpacity
+              style={[
+                styles.seeMoreButton,
+                { borderColor: theme.colors.borders.DEFAULT },
+              ]}
+            >
+              <Text style={[styles.seeMoreText, { color: theme.colors.muted }]}>
+                See more
+              </Text>
             </TouchableOpacity>
           </View>
-          
+
           {loadingNowPlaying ? (
-            <ActivityIndicator size="large" color={theme.colors.primary} style={styles.loader} />
+            <ActivityIndicator
+              size="large"
+              color={theme.colors.primary}
+              style={styles.loader}
+            />
           ) : (
             <FlatList
               horizontal
               data={nowPlaying?.results.slice(0, 10) || []}
               renderItem={renderNowShowingItem}
-              keyExtractor={(item) => item.id.toString()}
+              keyExtractor={item => item.id.toString()}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.nowShowingList}
             />
@@ -142,20 +205,31 @@ export const MoviesScreen = () => {
         {/* Popular Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Popular</Text>
-            <TouchableOpacity style={[styles.seeMoreButton, { borderColor: theme.colors.borders.DEFAULT }]}>
-              <Text style={[styles.seeMoreText, { color: theme.colors.muted }]}>See more</Text>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+              Popular
+            </Text>
+            <TouchableOpacity
+              style={[
+                styles.seeMoreButton,
+                { borderColor: theme.colors.borders.DEFAULT },
+              ]}
+            >
+              <Text style={[styles.seeMoreText, { color: theme.colors.muted }]}>
+                See more
+              </Text>
             </TouchableOpacity>
           </View>
-          
+
           {loadingPopular ? (
-            <ActivityIndicator size="large" color={theme.colors.primary} style={styles.loader} />
+            <ActivityIndicator
+              size="large"
+              color={theme.colors.primary}
+              style={styles.loader}
+            />
           ) : (
             <View style={styles.popularList}>
-              {popular?.results.slice(0, 5).map((movie) => (
-                <View key={movie.id}>
-                  {renderPopularItem({ item: movie })}
-                </View>
+              {popular?.results.slice(0, 5).map(movie => (
+                <View key={movie.id}>{renderPopularItem({ item: movie })}</View>
               ))}
             </View>
           )}
@@ -257,7 +331,7 @@ const styles = StyleSheet.create({
   loader: {
     marginVertical: 40,
   },
-  
+
   // Now Showing styles
   nowShowingList: {
     paddingLeft: 16,
@@ -288,7 +362,7 @@ const styles = StyleSheet.create({
   rating: {
     fontSize: 12,
   },
-  
+
   // Popular styles
   popularList: {
     paddingHorizontal: 16,
