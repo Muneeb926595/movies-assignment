@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { rf, wp } from '../../../../../theme';
 import FastImage from '@d11/react-native-fast-image';
+import Animated from 'react-native-reanimated';
 
 export const DurationRow = styled.View`
   flex-direction: row;
@@ -35,13 +36,14 @@ export const GenreText = styled.Text`
   font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
 `;
 
-export const PopularCard = styled.TouchableOpacity`
-  flex-direction: row;
-  padding: ${wp(3)}px;
-  border-radius: ${wp(3)}px;
-  margin-bottom: ${wp(3)}px;
-  background-color: ${props => props.theme.colors.surface[50]};
-`;
+export const PopularCard =
+  Animated.createAnimatedComponent(styled.TouchableOpacity`
+    flex-direction: row;
+    padding: ${wp(3)}px;
+    border-radius: ${wp(3)}px;
+    margin-bottom: ${wp(3)}px;
+    background-color: ${props => props.theme.colors.surface[50]};
+  `);
 
 export const PopularPoster = styled(FastImage)`
   width: ${wp(25)}px;

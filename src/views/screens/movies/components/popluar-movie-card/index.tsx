@@ -18,8 +18,15 @@ import {
 } from './styles';
 import { navigationRef } from '../../../../../navigation';
 import { RatingRow, StarIcon } from '../now-showing-movie-card/styles';
+import { FadeInDown } from 'react-native-reanimated';
 
-export const PopularMovieCard = ({ item }: { item: Movie }) => {
+export const PopularMovieCard = ({
+  item,
+  index,
+}: {
+  item: Movie;
+  index: number;
+}) => {
   const theme = useTheme();
   const genres = item.genre_ids?.slice(0, 3) || [];
 
@@ -28,7 +35,11 @@ export const PopularMovieCard = ({ item }: { item: Movie }) => {
   };
 
   return (
-    <PopularCard onPress={() => handleMoviePress(item.id)} activeOpacity={0.8}>
+    <PopularCard
+      onPress={() => handleMoviePress(item.id)}
+      activeOpacity={0.8}
+      entering={FadeInDown.delay(index * 50).springify()}
+    >
       <PopularPoster
         source={{ uri: getImageUrl(item.poster_path, 'w185') || '' }}
         resizeMode="cover"

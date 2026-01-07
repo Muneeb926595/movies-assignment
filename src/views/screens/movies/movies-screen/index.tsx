@@ -48,7 +48,9 @@ export const MoviesScreen = (props: TabScreenProps<'Movies'>) => {
         <FlatList
           horizontal
           data={nowPlaying?.results.slice(0, 10) || []}
-          renderItem={({ item }) => <NowShowingMovieCard item={item} />}
+          renderItem={({ item, index }) => (
+            <NowShowingMovieCard item={item} index={index} />
+          )}
           keyExtractor={item => item.id.toString()}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingLeft: wp(4) }}
@@ -72,7 +74,9 @@ export const MoviesScreen = (props: TabScreenProps<'Movies'>) => {
         <FlatList
           data={popular?.results}
           keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) => <PopularMovieCard item={item} />}
+          renderItem={({ item, index }) => (
+            <PopularMovieCard item={item} index={index} />
+          )}
           style={{
             paddingHorizontal: wp(4),
           }}

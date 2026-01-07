@@ -9,8 +9,15 @@ import {
   RatingRow,
   StarIcon,
 } from './styles';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
-export const NowShowingMovieCard = ({ item }: { item: Movie }) => {
+export const NowShowingMovieCard = ({
+  item,
+  index,
+}: {
+  item: Movie;
+  index: number;
+}) => {
   const handleMoviePress = (movieId: number) => {
     navigationRef.navigate('MovieDetailScreen', { movieId });
   };
@@ -19,6 +26,7 @@ export const NowShowingMovieCard = ({ item }: { item: Movie }) => {
     <NowShowingCard
       onPress={() => handleMoviePress(item.id)}
       activeOpacity={0.8}
+      entering={FadeInDown.delay(index * 50).springify()}
     >
       <NowShowingPoster
         source={{ uri: getImageUrl(item.poster_path, 'w500') || '' }}

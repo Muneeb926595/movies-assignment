@@ -2,16 +2,17 @@ import FastImage from '@d11/react-native-fast-image';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import { rf, wp } from '../../../../../theme';
+import Animated from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window');
 const POSTER_WIDTH = (width - 48) / 2.5;
 const POSTER_HEIGHT = POSTER_WIDTH * 1.5;
 
-export const NowShowingCard = styled.TouchableOpacity`
-  margin-right: ${wp(3)}px;
-  width: ${POSTER_WIDTH}px;
-`;
-
+export const NowShowingCard =
+  Animated.createAnimatedComponent(styled.TouchableOpacity`
+    margin-right: ${wp(3)}px;
+    width: ${POSTER_WIDTH}px;
+  `);
 export const NowShowingPoster = styled(FastImage)`
   width: ${POSTER_WIDTH}px;
   height: ${POSTER_HEIGHT}px;
