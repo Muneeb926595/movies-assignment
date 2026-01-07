@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { Props } from './types';
-import { useTheme } from 'styled-components/native';
 import { ScreenContainer, BodyContainer, BackgroundImageStyle } from './styles';
 
 export const Container = (props: Props) => {

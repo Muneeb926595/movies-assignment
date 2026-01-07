@@ -5,7 +5,6 @@ import {
   useNowPlayingMovies,
   usePopularMovies,
 } from '../../../../react-query/movies';
-import { TabScreenProps } from '../../../../navigation/types';
 import { AppIcon } from '../../../components';
 import { AppIconName, AppIconSize } from '../../../components/icon/types';
 import {
