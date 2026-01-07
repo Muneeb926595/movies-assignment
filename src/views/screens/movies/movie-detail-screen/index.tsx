@@ -50,13 +50,15 @@ import {
   CastCharacter,
   ErrorText,
 } from './styles';
+import { FlatList } from 'react-native-gesture-handler';
 
 export const MovieDetailScreen = ({
   route,
   navigation,
 }: ScreenProps<'MovieDetailScreen'>) => {
-  const { movieId } = route.params;
   const theme = useTheme();
+
+  const { movieId } = route.params;
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
 
   const { data: movie, isLoading, error } = useMovieDetails(movieId);
@@ -198,13 +200,16 @@ export const MovieDetailScreen = ({
               <SectionTitle>Cast</SectionTitle>
               <SeeMore>See more</SeeMore>
             </SectionHeader>
-            <RNScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {cast.slice(0, 10).map(actor => (
-                <CastCard key={actor.id}>
-                  {actor.profile_path ? (
+            <FlatList
+              horizontal
+              data={cast.slice(0, 10)}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <CastCard key={item.id}>
+                  {item.profile_path ? (
                     <FastImage
                       source={{
-                        uri: getImageUrl(actor.profile_path, 'w185') || '',
+                        uri: getImageUrl(item.profile_path, 'w185') || '',
                       }}
                       style={{
                         width: 100,
@@ -217,13 +222,13 @@ export const MovieDetailScreen = ({
                   ) : (
                     <CastPlaceholder />
                   )}
-                  <CastName numberOfLines={1}>{actor.name}</CastName>
+                  <CastName numberOfLines={1}>{item.name}</CastName>
                   <CastCharacter numberOfLines={1}>
-                    {actor.character}
+                    {item.character}
                   </CastCharacter>
                 </CastCard>
-              ))}
-            </RNScrollView>
+              )}
+            />
           </Section>
         )}
       </ContentContainer>

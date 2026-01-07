@@ -3,7 +3,6 @@ import { FlatList, ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { useSearchMovies } from '../../../../react-query/movies';
 import { useDebounce } from '../../../../hooks';
-import { useNavigation } from '@react-navigation/native';
 import { MovieCard } from '../../../components/movie-card';
 import { useMoviesStore } from '../../../../stores';
 import { AppIcon } from '../../../components';
@@ -28,6 +27,7 @@ export const SearchScreen = (props: TabScreenProps<'Search'>) => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery, 500);
+
   const { isFavourite, addToFavourites, removeFromFavourites } =
     useMoviesStore();
 

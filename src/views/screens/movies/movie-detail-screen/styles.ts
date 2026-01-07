@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
+import { rf, wp } from '../../../../theme';
 
 const { width } = Dimensions.get('window');
 
@@ -35,10 +36,10 @@ export const BackdropOverlay = styled.View`
 
 export const BackButton = styled.TouchableOpacity`
   position: absolute;
-  top: 50px;
-  left: 16px;
-  width: 40px;
-  height: 40px;
+  top: ${wp(12)}px;
+  left: ${wp(4)}px;
+  width: ${wp(10)}px;
+  height: ${wp(10)}px;
   border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
@@ -47,10 +48,10 @@ export const BackButton = styled.TouchableOpacity`
 
 export const FavouriteButton = styled.TouchableOpacity`
   position: absolute;
-  top: 50px;
-  right: 16px;
-  width: 40px;
-  height: 40px;
+  top: ${wp(12)}px;
+  right: ${wp(4)}px;
+  width: ${wp(10)}px;
+  height: ${wp(10)}px;
   border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
@@ -59,16 +60,16 @@ export const FavouriteButton = styled.TouchableOpacity`
 
 export const PlayButtonContainer = styled.View`
   position: absolute;
-  bottom: 20px;
+  bottom: ${wp(5)}px;
   left: 0;
   right: 0;
   align-items: center;
 `;
 
 export const PlayButton = styled.TouchableOpacity`
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
+  width: ${wp(15)}px;
+  height: ${wp(15)}px;
+  border-radius: ${wp(7.5)}px;
   justify-content: center;
   align-items: center;
   margin-bottom: 8px;
@@ -77,31 +78,31 @@ export const PlayButton = styled.TouchableOpacity`
 
 export const PlayButtonText = styled.Text`
   color: white;
-  font-size: 24px;
+  font-size: ${rf(24)}px;
   margin-left: 4px;
 `;
 
 export const PlayButtonLabel = styled.Text`
   color: white;
-  font-size: 14px;
+  font-size: ${rf(14)}px;
   font-weight: 600;
 `;
 
 export const ContentContainer = styled.View`
-  padding: 16px;
+  padding: ${wp(4)}px;
 `;
 
 export const Title = styled.Text`
-  font-size: 24px;
+  font-size: ${rf(24)}px;
   font-weight: bold;
-  margin-bottom: 12px;
+  margin-bottom: ${wp(3)}px;
   color: ${({ theme }) => theme.colors.text};
 `;
 
 export const InfoRow = styled.View`
   flex-direction: row;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: ${wp(4)}px;
 `;
 
 export const RatingContainer = styled.View`
@@ -110,8 +111,8 @@ export const RatingContainer = styled.View`
 `;
 
 export const Rating = styled.Text`
-  font-size: 14px;
-  margin-left: 6px;
+  font-size: ${rf(14)}px;
+  margin-left: ${wp(1.5)}px;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.text};
 `;
@@ -119,20 +120,20 @@ export const Rating = styled.Text`
 export const GenresContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: ${wp(4)}px;
 `;
 
 export const GenreChip = styled.View`
-  padding-horizontal: 12px;
-  padding-vertical: 6px;
-  border-radius: 16px;
-  margin-right: 8px;
-  margin-bottom: 8px;
+  padding-horizontal: ${wp(3)}px;
+  padding-vertical: ${wp(1.5)}px;
+  border-radius: ${wp(4)}px;
+  margin-right: ${wp(2)}px;
+  margin-bottom: ${wp(2)}px;
   background-color: ${({ theme }) => theme.colors.surface['100']};
 `;
 
 export const GenreText = styled.Text`
-  font-size: 12px;
+  font-size: ${rf(12)}px;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.primary};
 `;
@@ -140,8 +141,8 @@ export const GenreText = styled.Text`
 export const DetailsRow = styled.View`
   flex-direction: row;
   justify-content: space-around;
-  margin-bottom: 24px;
-  padding-vertical: 16px;
+  margin-bottom: ${wp(6)}px;
+  padding-vertical: ${wp(4)}px;
 `;
 
 export const DetailItem = styled.View`
@@ -149,75 +150,75 @@ export const DetailItem = styled.View`
 `;
 
 export const DetailLabel = styled.Text`
-  font-size: 12px;
-  margin-bottom: 4px;
+  font-size: ${rf(12)}px;
+  margin-bottom: ${wp(1)}px;
   color: ${({ theme }) => theme.colors.muted};
 `;
 
 export const DetailValue = styled.Text`
-  font-size: 14px;
+  font-size: ${rf(14)}px;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.text};
 `;
 
 export const Section = styled.View`
-  margin-bottom: 24px;
+  margin-bottom: ${wp(6)}px;
 `;
 
 export const SectionHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: ${wp(3)}px;
 `;
 
 export const SectionTitle = styled.Text`
-  font-size: 18px;
+  font-size: ${rf(18)}px;
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: ${wp(3)}px;
   color: ${({ theme }) => theme.colors.text};
 `;
 
 export const SeeMore = styled.Text`
-  font-size: 14px;
+  font-size: ${rf(14)}px;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const Overview = styled.Text`
-  font-size: 14px;
+  font-size: ${rf(14)}px;
   line-height: 22px;
   color: ${({ theme }) => theme.colors.muted};
 `;
 
 export const CastCard = styled.View`
-  width: 100px;
-  margin-right: 12px;
+  width: ${wp(25)}px;
+  margin-right: ${wp(3)}px;
 `;
 
 export const CastImage = styled.Image`
-  width: 100px;
-  height: 100px;
+  width: ${wp(25)}px;
+  height: ${wp(25)}px;
   border-radius: 8px;
-  margin-bottom: 8px;
+  margin-bottom: ${wp(2)}px;
 `;
 
 export const CastPlaceholder = styled.View`
-  width: 100px;
-  height: 100px;
+  width: ${wp(25)}px;
+  height: ${wp(25)}px;
   border-radius: 8px;
-  margin-bottom: 8px;
+  margin-bottom: ${wp(2)}px;
   background-color: ${({ theme }) => theme.colors.surface['100']};
 `;
 
 export const CastName = styled.Text`
-  font-size: 12px;
+  font-size: ${rf(12)}px;
   font-weight: 600;
-  margin-bottom: 2px;
+  margin-bottom: ${wp(1)}px;
   color: ${({ theme }) => theme.colors.text};
 `;
 
 export const CastCharacter = styled.Text`
-  font-size: 11px;
+  font-size: ${rf(11)}px;
   color: ${({ theme }) => theme.colors.muted};
 `;
 

@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { Movie } from '../../types/movie.types';
 
 interface MoviesState {
   favourites: Set<number>;
