@@ -39,7 +39,7 @@ export const GenreText = styled.Text`
 export const PopularCard =
   Animated.createAnimatedComponent(styled.TouchableOpacity`
     flex-direction: row;
-    padding: ${Layout.widthPercentageToDP(3)}px;
+    padding: ${Layout.widthPercentageToDP(2.4)}px;
     border-radius: ${Layout.widthPercentageToDP(3)}px;
     margin-bottom: ${Layout.widthPercentageToDP(3)}px;
     background-color: ${props => props.theme.colors.surface[50]};
@@ -60,7 +60,7 @@ export const PopularInfo = styled.View`
 export const PopularTitle = styled.Text`
   font-size: ${Layout.RFValue(16)}px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: ${Layout.widthPercentageToDP(2)}px;
   color: ${props => props.theme.colors.text};
   font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
 `;

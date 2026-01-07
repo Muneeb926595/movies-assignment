@@ -22,7 +22,7 @@ export const CenterContent = styled.View`
 
 export const BackdropContainer = styled.View`
   width: ${width}px;
-  height: ${width * 0.6}px;
+  height: ${width * 0.66}px;
   position: relative;
 `;
 

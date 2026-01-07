@@ -4,7 +4,7 @@ import { Layout } from '../../../../globals';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${props => props.theme.colors.background};
+  background-color: ${props => props.theme.colors.white};
 `;
 
 export const Header = styled.View`
@@ -54,6 +54,7 @@ export const ScrollView = styled.ScrollView`
 
 export const Section = styled.View`
   margin-bottom: ${Layout.widthPercentageToDP(6)}px;
+  padding-left: ${Layout.widthPercentageToDP(3)}px;
 `;
 
 export const SectionHeader = styled.View`
@@ -72,15 +73,15 @@ export const SectionTitle = styled.Text`
 `;
 
 export const SeeMoreButton = styled.TouchableOpacity`
-  padding-horizontal: ${Layout.widthPercentageToDP(4)}px;
-  padding-vertical: ${Layout.widthPercentageToDP(2)}px;
+  padding-horizontal: ${Layout.widthPercentageToDP(2)}px;
+  padding-vertical: ${Layout.widthPercentageToDP(1)}px;
   border-radius: ${Layout.widthPercentageToDP(5)}px;
   border-width: 1px;
   border-color: ${props => props.theme.colors.borders.DEFAULT};
 `;
 
 export const SeeMoreText = styled.Text`
-  font-size: ${Layout.RFValue(14)}px;
+  font-size: ${Layout.RFValue(11)}px;
   color: ${props => props.theme.colors.muted};
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
 `;

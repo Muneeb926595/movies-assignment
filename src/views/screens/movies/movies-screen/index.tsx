@@ -82,9 +82,6 @@ export const MoviesScreen = () => {
           renderItem={({ item, index }) => (
             <PopularMovieCard item={item} index={index} />
           )}
-          style={{
-            paddingHorizontal: Layout.RFValue(4),
-          }}
         />
       )}
     </Section>

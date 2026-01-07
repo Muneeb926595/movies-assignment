@@ -12,6 +12,8 @@ export const NowShowingCard =
   Animated.createAnimatedComponent(styled.TouchableOpacity`
     margin-right: ${Layout.widthPercentageToDP(3)}px;
     width: ${POSTER_WIDTH}px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    elevation: 3;
   `);
 export const NowShowingPoster = styled(FastImage)`
   width: ${POSTER_WIDTH}px;
