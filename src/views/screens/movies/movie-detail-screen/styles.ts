@@ -1,12 +1,18 @@
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import { Layout } from '../../../../globals';
+import FastImage from '@d11/react-native-fast-image';
 
 const { width } = Dimensions.get('window');
 
 export const Container = styled.ScrollView`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
+`;
+
+export const BgImage = styled(FastImage)`
+  width: 100%;
+  height: 100%;
 `;
 
 export const CenterContent = styled.View`

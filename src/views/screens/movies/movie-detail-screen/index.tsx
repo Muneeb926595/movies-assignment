@@ -11,7 +11,6 @@ import {
   useMovieVideos,
 } from '../../../../react-query/movies';
 import { ScreenProps } from '../../../../navigation/types';
-import FastImage from '@d11/react-native-fast-image';
 import { getImageUrl } from '../../../../api/endpoints/movies';
 import { useMoviesStore } from '../../../../stores';
 import { AppIcon, VideoPlayer } from '../../../components';
@@ -45,6 +44,7 @@ import {
   SeeMore,
   Overview,
   ErrorText,
+  BgImage,
 } from './styles';
 import { FlatList } from 'react-native-gesture-handler';
 import { MovieCastCard } from '../components';
@@ -80,7 +80,7 @@ export const MovieDetailScreen = ({
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <View style={{ flex: 1 }}>
         <CenterContent style={{ flex: 1 }}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
         </CenterContent>
@@ -90,7 +90,7 @@ export const MovieDetailScreen = ({
 
   if (error || !movie) {
     return (
-      <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <View style={{ flex: 1 }}>
         <CenterContent style={{ flex: 1 }}>
           <ErrorText>Error loading movie details</ErrorText>
         </CenterContent>
@@ -101,17 +101,10 @@ export const MovieDetailScreen = ({
   const backdropUrl = getImageUrl(movie.backdrop_path, 'w780');
 
   return (
-    <RNScrollView
-      style={{ flex: 1, backgroundColor: theme.colors.background }}
-      showsVerticalScrollIndicator={false}
-    >
+    <RNScrollView showsVerticalScrollIndicator={false}>
       {backdropUrl && (
         <BackdropContainer>
-          <FastImage
-            source={{ uri: backdropUrl }}
-            style={{ width: '100%', height: '100%' }}
-            resizeMode="cover"
-          />
+          <BgImage source={{ uri: backdropUrl }} resizeMode="cover" />
           <BackdropOverlay />
 
           <BackButton onPress={() => navigation.goBack()}>
