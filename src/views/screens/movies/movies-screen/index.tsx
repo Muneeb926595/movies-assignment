@@ -22,7 +22,6 @@ import {
   SeeMoreButton,
   SeeMoreText,
 } from './styles';
-import { ScrollView } from 'react-native-gesture-handler';
 import { PopularMovieCard } from '../components/popluar-movie-card';
 import { wp } from '../../../../theme';
 import { NowShowingMovieCard } from '../components';
@@ -33,6 +32,54 @@ export const MoviesScreen = (props: TabScreenProps<'Movies'>) => {
   const { data: nowPlaying, isLoading: loadingNowPlaying } =
     useNowPlayingMovies(1);
   const { data: popular, isLoading: loadingPopular } = usePopularMovies(1);
+
+  const RenderNowShowingSection = (
+    <Section>
+      <SectionHeader>
+        <SectionTitle>Now Showing</SectionTitle>
+        <SeeMoreButton>
+          <SeeMoreText>See more</SeeMoreText>
+        </SeeMoreButton>
+      </SectionHeader>
+
+      {loadingNowPlaying ? (
+        <Loader size="large" color={theme.colors.primary} />
+      ) : (
+        <FlatList
+          horizontal
+          data={nowPlaying?.results.slice(0, 10) || []}
+          renderItem={({ item }) => <NowShowingMovieCard item={item} />}
+          keyExtractor={item => item.id.toString()}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingLeft: wp(4) }}
+        />
+      )}
+    </Section>
+  );
+
+  const RenderPopularMoviesSection = (
+    <Section>
+      <SectionHeader>
+        <SectionTitle>Popular</SectionTitle>
+        <SeeMoreButton>
+          <SeeMoreText>See more</SeeMoreText>
+        </SeeMoreButton>
+      </SectionHeader>
+
+      {loadingPopular ? (
+        <Loader size="large" color={theme.colors.primary} />
+      ) : (
+        <FlatList
+          data={popular?.results}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({ item }) => <PopularMovieCard item={item} />}
+          style={{
+            paddingHorizontal: wp(4),
+          }}
+        />
+      )}
+    </Section>
+  );
 
   return (
     <Container>
@@ -55,52 +102,12 @@ export const MoviesScreen = (props: TabScreenProps<'Movies'>) => {
         </NotificationButton>
       </Header>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Section>
-          <SectionHeader>
-            <SectionTitle>Now Showing</SectionTitle>
-            <SeeMoreButton>
-              <SeeMoreText>See more</SeeMoreText>
-            </SeeMoreButton>
-          </SectionHeader>
-
-          {loadingNowPlaying ? (
-            <Loader size="large" color={theme.colors.primary} />
-          ) : (
-            <FlatList
-              horizontal
-              data={nowPlaying?.results.slice(0, 10) || []}
-              renderItem={({ item }) => <NowShowingMovieCard item={item} />}
-              keyExtractor={item => item.id.toString()}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingLeft: wp(4) }}
-            />
-          )}
-        </Section>
-
-        {/* Popular Section */}
-        <Section>
-          <SectionHeader>
-            <SectionTitle>Popular</SectionTitle>
-            <SeeMoreButton>
-              <SeeMoreText>See more</SeeMoreText>
-            </SeeMoreButton>
-          </SectionHeader>
-
-          {loadingPopular ? (
-            <Loader size="large" color={theme.colors.primary} />
-          ) : (
-            <FlatList
-              data={popular?.results}
-              keyExtractor={item => item.id.toString()}
-              renderItem={({ item }) => <PopularMovieCard item={item} />}
-              style={{
-                paddingHorizontal: wp(4),
-              }}
-            />
-          )}
-        </Section>
-      </ScrollView>
+      <FlatList
+        data={[]}
+        renderItem={() => <></>}
+        ListHeaderComponent={RenderNowShowingSection}
+        ListFooterComponent={RenderPopularMoviesSection}
+      />
     </Container>
   );
 };
