@@ -44,13 +44,10 @@ import {
   SectionTitle,
   SeeMore,
   Overview,
-  CastCard,
-  CastPlaceholder,
-  CastName,
-  CastCharacter,
   ErrorText,
 } from './styles';
 import { FlatList } from 'react-native-gesture-handler';
+import { MovieCastCard } from '../components';
 
 export const MovieDetailScreen = ({
   route,
@@ -202,31 +199,13 @@ export const MovieDetailScreen = ({
             </SectionHeader>
             <FlatList
               horizontal
-              data={cast.slice(0, 10)}
+              initialNumToRender={5}
+              maxToRenderPerBatch={5}
+              windowSize={5}
+              data={cast.slice(0, 15)}
               showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <CastCard key={item.id}>
-                  {item.profile_path ? (
-                    <FastImage
-                      source={{
-                        uri: getImageUrl(item.profile_path, 'w185') || '',
-                      }}
-                      style={{
-                        width: 100,
-                        height: 100,
-                        borderRadius: 8,
-                        marginBottom: 8,
-                      }}
-                      resizeMode="cover"
-                    />
-                  ) : (
-                    <CastPlaceholder />
-                  )}
-                  <CastName numberOfLines={1}>{item.name}</CastName>
-                  <CastCharacter numberOfLines={1}>
-                    {item.character}
-                  </CastCharacter>
-                </CastCard>
+              renderItem={({ item, index }) => (
+                <MovieCastCard item={item} index={index} />
               )}
             />
           </Section>
