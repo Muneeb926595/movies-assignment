@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, StatusBar } from 'react-native';
+import { Modal } from 'react-native';
 import YoutubeIframe from 'react-native-youtube-iframe';
 import { useTheme } from 'styled-components/native';
 import { AppIcon } from '../icon';

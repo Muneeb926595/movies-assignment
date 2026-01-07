@@ -26,7 +26,7 @@ import { PopularMovieCard } from '../components/popluar-movie-card';
 import { NowShowingMovieCard } from '../components';
 import { Layout } from '../../../../globals';
 
-export const MoviesScreen = (props: TabScreenProps<'Movies'>) => {
+export const MoviesScreen = () => {
   const theme = useTheme();
 
   const { data: nowPlaying, isLoading: loadingNowPlaying } =

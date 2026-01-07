@@ -9,7 +9,7 @@ import {
   RatingRow,
   StarIcon,
 } from './styles';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import { FadeInDown } from 'react-native-reanimated';
 
 export const NowShowingMovieCard = ({
   item,

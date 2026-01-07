@@ -11,7 +11,6 @@ import { useTheme } from 'styled-components/native';
 import { ScreenContainer, BodyContainer, BackgroundImageStyle } from './styles';
 
 export const Container = (props: Props) => {
-  const theme = useTheme();
   const {
     hasScroll,
     bounces,

@@ -1,7 +1,6 @@
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { Props } from './types';
-import { AppText } from '../text';
 import { StyledButton, ButtonLabel } from './styles';
 
 export const Button = (props: Props) => {

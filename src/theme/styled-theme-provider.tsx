@@ -8,7 +8,7 @@ import React, {
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
 import { lightTheme, darkTheme, Theme } from './styled-theme-config';
 import { storageService, StorageKeys } from '../services/storage';
-import { Platform, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import switchTheme from 'react-native-theme-switch-animation';
 
 type ThemeName = 'light' | 'dark';
