@@ -1,2 +1,2 @@
 // Zustand stores
-export { useMoviesStore } from './movies';
+export { useMoviesStore } from './movies/movies.store';

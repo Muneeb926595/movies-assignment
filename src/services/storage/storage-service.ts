@@ -34,6 +34,7 @@ export enum StorageKeys {
 
   // Notification Module
   SUPPRESSED_NOTIFICATIONS = 'suppressed_notifications',
+  FAVOURITE_MOVIES = 'favourite_movies',
 }
 
 /**
