@@ -1,14 +1,5 @@
-/**
- * Common Styled Components
- * Reusable styled components following best practices
- */
-
 import styled from 'styled-components/native';
-import { wp, hp, rf } from '../theme/styled-utils';
-
-/**
- * Layout Components
- */
+import { Layout } from '../globals';
 
 export const Container = styled.View`
   flex: 1;
@@ -75,72 +66,72 @@ export const CardFooter = styled(Row)`
 
 export const H1 = styled.Text`
   font-family: ${props => props.theme.fonts.latoBold.fontFamily};
-  font-size: ${rf(32)}px;
+  font-size: ${Layout.RFValue(32)}px;
   color: ${props => props.theme.colors.text};
   margin-bottom: ${props => props.theme.spacing.small}px;
 `;
 
 export const H2 = styled.Text`
   font-family: ${props => props.theme.fonts.latoBold.fontFamily};
-  font-size: ${rf(28)}px;
+  font-size: ${Layout.RFValue(28)}px;
   color: ${props => props.theme.colors.text};
   margin-bottom: ${props => props.theme.spacing.small}px;
 `;
 
 export const H3 = styled.Text`
   font-family: ${props => props.theme.fonts.latoBold.fontFamily};
-  font-size: ${rf(24)}px;
+  font-size: ${Layout.RFValue(24)}px;
   color: ${props => props.theme.colors.text};
   margin-bottom: ${props => props.theme.spacing.small}px;
 `;
 
 export const H4 = styled.Text`
   font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
-  font-size: ${rf(20)}px;
+  font-size: ${Layout.RFValue(20)}px;
   color: ${props => props.theme.colors.text};
   margin-bottom: ${props => props.theme.spacing.micro}px;
 `;
 
 export const H5 = styled.Text`
   font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
-  font-size: ${rf(18)}px;
+  font-size: ${Layout.RFValue(18)}px;
   color: ${props => props.theme.colors.text};
 `;
 
 export const H6 = styled.Text`
   font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
-  font-size: ${rf(16)}px;
+  font-size: ${Layout.RFValue(16)}px;
   color: ${props => props.theme.colors.text};
 `;
 
 export const BodyText = styled.Text`
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
-  font-size: ${rf(14)}px;
+  font-size: ${Layout.RFValue(14)}px;
   color: ${props => props.theme.colors.text};
-  line-height: ${rf(20)}px;
+  line-height: ${Layout.RFValue(20)}px;
 `;
 
 export const SmallText = styled.Text`
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
-  font-size: ${rf(12)}px;
+  font-size: ${Layout.RFValue(12)}px;
   color: ${props => props.theme.colors.muted};
 `;
 
 export const TinyText = styled.Text`
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
-  font-size: ${rf(10)}px;
+  font-size: ${Layout.RFValue(10)}px;
   color: ${props => props.theme.colors.muted};
 `;
 
 export const BoldText = styled.Text`
   font-family: ${props => props.theme.fonts.latoBold.fontFamily};
-  font-size: ${rf(14)}px;
+  font-size: ${Layout.RFValue(14)}px;
   color: ${props => props.theme.colors.text};
 `;
 
 export const LinkText = styled.Text`
   font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
-  font-size: ${rf(14)}px;
+  font-size: ${Layout.RFValue(14)}px;
   color: ${props => props.theme.colors.brand.DEFAULT};
   text-decoration-line: underline;
 `;
@@ -154,9 +145,9 @@ export const PrimaryButton = styled.TouchableOpacity<{ disabled?: boolean }>`
     props.disabled
       ? props.theme.colors.surface[100]
       : props.theme.colors.brand.DEFAULT};
-  padding-vertical: ${hp(2)}px;
-  padding-horizontal: ${wp(8)}px;
-  border-radius: ${wp(2)}px;
+  padding-vertical: ${Layout.heightPercentageToDP(2)}px;
+  padding-horizontal: ${Layout.widthPercentageToDP(8)}px;
+  border-radius: ${Layout.widthPercentageToDP(2)}px;
   align-items: center;
   justify-content: center;
   shadow-color: #000;
@@ -173,9 +164,9 @@ export const SecondaryButton = styled.TouchableOpacity<{ disabled?: boolean }>`
     props.disabled
       ? props.theme.colors.borders[100]
       : props.theme.colors.brand.DEFAULT};
-  padding-vertical: ${hp(2)}px;
-  padding-horizontal: ${wp(8)}px;
-  border-radius: ${wp(2)}px;
+  padding-vertical: ${Layout.heightPercentageToDP(2)}px;
+  padding-horizontal: ${Layout.widthPercentageToDP(8)}px;
+  border-radius: ${Layout.widthPercentageToDP(2)}px;
   align-items: center;
   justify-content: center;
 `;
@@ -183,17 +174,17 @@ export const SecondaryButton = styled.TouchableOpacity<{ disabled?: boolean }>`
 export const OutlineButton = styled.TouchableOpacity`
   border-width: 1px;
   border-color: ${props => props.theme.colors.borders.DEFAULT};
-  padding-vertical: ${hp(1.5)}px;
-  padding-horizontal: ${wp(6)}px;
-  border-radius: ${wp(2)}px;
+  padding-vertical: ${Layout.heightPercentageToDP(1.5)}px;
+  padding-horizontal: ${Layout.widthPercentageToDP(6)}px;
+  border-radius: ${Layout.widthPercentageToDP(2)}px;
   align-items: center;
   justify-content: center;
 `;
 
 export const IconButton = styled.TouchableOpacity`
-  width: ${wp(12)}px;
-  height: ${wp(12)}px;
-  border-radius: ${wp(6)}px;
+  width: ${Layout.widthPercentageToDP(12)}px;
+  height: ${Layout.widthPercentageToDP(12)}px;
+  border-radius: ${Layout.widthPercentageToDP(6)}px;
   align-items: center;
   justify-content: center;
   background-color: ${props => props.theme.colors.surface[50]};
@@ -201,7 +192,7 @@ export const IconButton = styled.TouchableOpacity`
 
 export const ButtonText = styled.Text<{ variant?: 'primary' | 'secondary' }>`
   font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
-  font-size: ${rf(16)}px;
+  font-size: ${Layout.RFValue(16)}px;
   color: ${props =>
     props.variant === 'secondary'
       ? props.theme.colors.brand.DEFAULT
@@ -216,24 +207,24 @@ export const Input = styled.TextInput`
   background-color: ${props => props.theme.colors.surface.DEFAULT};
   border-width: 1px;
   border-color: ${props => props.theme.colors.borders.DEFAULT};
-  border-radius: ${wp(2)}px;
-  padding-horizontal: ${wp(4)}px;
-  padding-vertical: ${hp(1.5)}px;
+  border-radius: ${Layout.widthPercentageToDP(2)}px;
+  padding-horizontal: ${Layout.widthPercentageToDP(4)}px;
+  padding-vertical: ${Layout.heightPercentageToDP(1.5)}px;
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
-  font-size: ${rf(14)}px;
+  font-size: ${Layout.RFValue(14)}px;
   color: ${props => props.theme.colors.text};
 `;
 
 export const InputLabel = styled.Text`
   font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
-  font-size: ${rf(14)}px;
+  font-size: ${Layout.RFValue(14)}px;
   color: ${props => props.theme.colors.text};
   margin-bottom: ${props => props.theme.spacing.micro}px;
 `;
 
 export const InputError = styled.Text`
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
-  font-size: ${rf(12)}px;
+  font-size: ${Layout.RFValue(12)}px;
   color: ${props => props.theme.colors.red};
   margin-top: ${props => props.theme.spacing.micro}px;
 `;
@@ -253,7 +244,7 @@ export const ListItem = styled.TouchableOpacity`
 export const ListItemText = styled.Text`
   flex: 1;
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
-  font-size: ${rf(14)}px;
+  font-size: ${Layout.RFValue(14)}px;
   color: ${props => props.theme.colors.text};
 `;
 
@@ -282,15 +273,15 @@ export const Badge = styled.View<{
         return props.theme.colors.brand.DEFAULT;
     }
   }};
-  padding-horizontal: ${wp(3)}px;
-  padding-vertical: ${hp(0.5)}px;
-  border-radius: ${wp(3)}px;
+  padding-horizontal: ${Layout.widthPercentageToDP(3)}px;
+  padding-vertical: ${Layout.heightPercentageToDP(0.5)}px;
+  border-radius: ${Layout.widthPercentageToDP(3)}px;
   align-self: flex-start;
 `;
 
 export const BadgeText = styled.Text`
   font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
-  font-size: ${rf(10)}px;
+  font-size: ${Layout.RFValue(10)}px;
   color: ${props => props.theme.colors.white};
 `;
 
@@ -309,8 +300,8 @@ export const ModalContent = styled.View`
   background-color: ${props => props.theme.colors.background};
   border-radius: 16px;
   padding: ${props => props.theme.spacing.large}px;
-  width: ${wp(85)}px;
-  max-height: ${hp(80)}px;
+  width: ${Layout.widthPercentageToDP(85)}px;
+  max-height: ${Layout.heightPercentageToDP(80)}px;
   shadow-color: #000;
   shadow-offset: 0px 2px;
   shadow-opacity: 0.25;
@@ -326,7 +317,7 @@ export const ModalHeader = styled(Row)`
 
 export const ModalTitle = styled.Text`
   font-family: ${props => props.theme.fonts.latoBold.fontFamily};
-  font-size: ${rf(20)}px;
+  font-size: ${Layout.RFValue(20)}px;
   color: ${props => props.theme.colors.text};
 `;
 
@@ -361,7 +352,7 @@ export const AvatarImage = styled.Image`
 
 export const AvatarText = styled.Text`
   font-family: ${props => props.theme.fonts.latoBold.fontFamily};
-  font-size: ${rf(16)}px;
+  font-size: ${Layout.RFValue(16)}px;
   color: ${props => props.theme.colors.white};
 `;
 
@@ -376,7 +367,7 @@ export const LoadingContainer = styled(Center)`
 
 export const LoadingText = styled.Text`
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
-  font-size: ${rf(14)}px;
+  font-size: ${Layout.RFValue(14)}px;
   color: ${props => props.theme.colors.muted};
   margin-top: ${props => props.theme.spacing.small}px;
 `;
@@ -392,7 +383,7 @@ export const EmptyStateContainer = styled(Center)`
 
 export const EmptyStateTitle = styled.Text`
   font-family: ${props => props.theme.fonts.latoBold.fontFamily};
-  font-size: ${rf(18)}px;
+  font-size: ${Layout.RFValue(18)}px;
   color: ${props => props.theme.colors.text};
   margin-top: ${props => props.theme.spacing.medium}px;
   text-align: center;
@@ -400,7 +391,7 @@ export const EmptyStateTitle = styled.Text`
 
 export const EmptyStateMessage = styled.Text`
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
-  font-size: ${rf(14)}px;
+  font-size: ${Layout.RFValue(14)}px;
   color: ${props => props.theme.colors.muted};
   margin-top: ${props => props.theme.spacing.small}px;
   text-align: center;

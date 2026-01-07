@@ -1,35 +1,35 @@
 import styled from 'styled-components/native';
-import { rf, wp } from '../../../../../theme';
 import Animated from 'react-native-reanimated';
+import { Layout } from '../../../../../globals';
 
 export const CastCard = Animated.createAnimatedComponent(styled.View`
-  width: ${wp(25)}px;
-  margin-right: ${wp(3)}px;
+  width: ${Layout.widthPercentageToDP(25)}px;
+  margin-right: ${Layout.widthPercentageToDP(3)}px;
 `);
 
 export const CastImage = styled.Image`
-  width: ${wp(25)}px;
-  height: ${wp(25)}px;
+  width: ${Layout.widthPercentageToDP(25)}px;
+  height: ${Layout.widthPercentageToDP(25)}px;
   border-radius: 8px;
-  margin-bottom: ${wp(2)}px;
+  margin-bottom: ${Layout.widthPercentageToDP(2)}px;
 `;
 
 export const CastPlaceholder = styled.View`
-  width: ${wp(25)}px;
-  height: ${wp(25)}px;
+  width: ${Layout.widthPercentageToDP(25)}px;
+  height: ${Layout.widthPercentageToDP(25)}px;
   border-radius: 8px;
-  margin-bottom: ${wp(2)}px;
+  margin-bottom: ${Layout.widthPercentageToDP(2)}px;
   background-color: ${({ theme }) => theme.colors.surface['100']};
 `;
 
 export const CastName = styled.Text`
-  font-size: ${rf(12)}px;
+  font-size: ${Layout.RFValue(12)}px;
   font-weight: 600;
-  margin-bottom: ${wp(1)}px;
+  margin-bottom: ${Layout.widthPercentageToDP(1)}px;
   color: ${({ theme }) => theme.colors.text};
 `;
 
 export const CastCharacter = styled.Text`
-  font-size: ${rf(11)}px;
+  font-size: ${Layout.RFValue(11)}px;
   color: ${({ theme }) => theme.colors.muted};
 `;

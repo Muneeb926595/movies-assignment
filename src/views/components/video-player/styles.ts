@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { rf } from '../../../theme';
+import { Layout } from '../../../globals';
 
 export const ModalContainer = styled.View`
   flex: 1;
@@ -43,7 +43,7 @@ export const PlayPauseButton = styled.TouchableOpacity`
 
 export const PlayPauseText = styled.Text`
   color: ${({ theme }) => theme.colors.white};
-  font-size: ${rf(32)}px;
+  font-size: ${Layout.RFValue(32)}px;
   line-height: 32px;
 `;
 
@@ -67,7 +67,7 @@ export const ErrorContainer = styled.View`
 
 export const ErrorText = styled.Text`
   color: ${({ theme }) => theme.colors.white};
-  font-size: ${rf(16)}px;
+  font-size: ${Layout.RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   text-align: center;
 `;

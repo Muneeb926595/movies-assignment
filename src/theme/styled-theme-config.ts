@@ -1,7 +1,3 @@
-/**
- * Simplified Styled Components Theme Configuration
- */
-
 import { Dimensions, PixelRatio } from 'react-native';
 
 const { width, height } = Dimensions.get('window');

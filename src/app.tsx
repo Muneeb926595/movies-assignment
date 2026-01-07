@@ -55,7 +55,7 @@ function App() {
       <ReactQueryProvider>
         <TranslationProvider>
           <StatusBar
-            barStyle="light-content"
+            barStyle="dark-content"
             backgroundColor="transparent"
             translucent
           />

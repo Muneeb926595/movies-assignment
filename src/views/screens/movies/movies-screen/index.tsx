@@ -23,8 +23,8 @@ import {
   SeeMoreText,
 } from './styles';
 import { PopularMovieCard } from '../components/popluar-movie-card';
-import { wp } from '../../../../theme';
 import { NowShowingMovieCard } from '../components';
+import { Layout } from '../../../../globals';
 
 export const MoviesScreen = (props: TabScreenProps<'Movies'>) => {
   const theme = useTheme();
@@ -56,7 +56,7 @@ export const MoviesScreen = (props: TabScreenProps<'Movies'>) => {
           )}
           keyExtractor={item => item.id.toString()}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingLeft: wp(4) }}
+          contentContainerStyle={{ paddingLeft: Layout.RFValue(4) }}
         />
       )}
     </Section>
@@ -84,7 +84,7 @@ export const MoviesScreen = (props: TabScreenProps<'Movies'>) => {
             <PopularMovieCard item={item} index={index} />
           )}
           style={{
-            paddingHorizontal: wp(4),
+            paddingHorizontal: Layout.RFValue(4),
           }}
         />
       )}

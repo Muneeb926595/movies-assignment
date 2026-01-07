@@ -1,8 +1,3 @@
-/**
- * Container Component - Styled Components Version
- * Main screen container with keyboard handling and scroll support
- */
-
 import React from 'react';
 import {
   KeyboardAvoidingView,

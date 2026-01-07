@@ -1,23 +1,23 @@
 import styled from 'styled-components/native';
-import { wp, rf } from '../../../theme/styled-utils';
+import { Layout } from '../../../globals';
 
 export const ErrorContainer = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: ${wp(5)}px;
+  padding: ${Layout.widthPercentageToDP(5)}px;
 `;
 
 export const ErrorTitle = styled.Text`
-  font-size: ${rf(18)}px;
+  font-size: ${Layout.RFValue(18)}px;
   font-weight: bold;
-  margin-bottom: ${wp(2.5)}px;
+  margin-bottom: ${Layout.widthPercentageToDP(2.5)}px;
   color: ${props => props.theme.colors.text};
   font-family: ${props => props.theme.fonts.latoBold.fontFamily};
 `;
 
 export const ErrorMessage = styled.Text`
-  margin-bottom: ${wp(5)}px;
+  margin-bottom: ${Layout.widthPercentageToDP(5)}px;
   text-align: center;
   color: ${props => props.theme.colors.red};
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};

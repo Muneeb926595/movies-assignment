@@ -1,7 +1,3 @@
-/**
- * Styled Components Theme Provider with Animation
- */
-
 import React, {
   createContext,
   useContext,

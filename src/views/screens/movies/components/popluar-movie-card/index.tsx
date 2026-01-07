@@ -38,7 +38,7 @@ export const PopularMovieCard = ({
     <PopularCard
       onPress={() => handleMoviePress(item.id)}
       activeOpacity={0.8}
-      entering={FadeInDown.delay(index * 50).springify()}
+      entering={FadeInDown.delay(index * (50 - index)).springify()}
     >
       <PopularPoster
         source={{ uri: getImageUrl(item.poster_path, 'w185') || '' }}

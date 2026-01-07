@@ -37,7 +37,6 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       onRequestClose={handleClose}
       statusBarTranslucent
     >
-      <StatusBar hidden />
       <ModalContainer>
         <CloseButton onPress={handleClose}>
           <AppIcon

@@ -1,12 +1,5 @@
-/**
- * Text Components - Styled Components Version
- * Themed text components with emphasis levels and link variants
- */
-
 import React from 'react';
-import { ColorValue } from 'react-native';
 import {
-  Emphasis,
   ParagraphLinkBoldProps,
   ParagraphLinkProps,
   Props,

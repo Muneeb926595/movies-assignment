@@ -1,8 +1,3 @@
-/**
- * MovieCard Component - Styled Components Version
- * Displays movie poster with title, rating, and favorite toggle
- */
-
 import React from 'react';
 import { useTheme } from 'styled-components/native';
 import { MovieCardProps } from './types';
