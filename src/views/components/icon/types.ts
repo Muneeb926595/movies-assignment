@@ -12,10 +12,13 @@ export type Props = {
 };
 
 export enum AppIconName {
+  Icon = 'UpTodo-Icon',
+  Menu = 'UpTodo-Menu',
   add = 'UpTodo-add',
   announcement = 'UpTodo-announcement',
   arrowDown = 'UpTodo-arrow-down',
   back = 'UpTodo-back',
+  bookmark = 'UpTodo-bookmark',
   calendar = 'UpTodo-calendar',
   clock = 'UpTodo-clock',
   cross = 'UpTodo-cross',

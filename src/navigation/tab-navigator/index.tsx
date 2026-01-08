@@ -15,6 +15,12 @@ import {
 const MainTabs = createBottomTabNavigator<MainBottomTabsParamList>();
 const Stack = createNativeStackNavigator<MainStackParamList>();
 
+enum ScreenStacks {
+  Movies = 'Movies',
+  Favourites = 'Favourites',
+  Search = 'Search',
+}
+
 // Generic stack navigator creator to avoid repetition
 const createStackNavigator = (
   screenName: string,
@@ -34,11 +40,13 @@ const createStackNavigator = (
   return StackNavigator;
 };
 
-const MoviesStack = createStackNavigator('Movies', MoviesScreen);
-const FavouritesStack = createStackNavigator('Favourites', FavouritesScreen);
-const SearchStack = createStackNavigator('Search', SearchScreen);
+const MoviesStack = createStackNavigator(ScreenStacks.Movies, MoviesScreen);
+const FavouritesStack = createStackNavigator(
+  ScreenStacks.Favourites,
+  FavouritesScreen,
+);
+const SearchStack = createStackNavigator(ScreenStacks.Search, SearchScreen);
 
-// Tab configuration
 type TabConfig = {
   name: keyof MainBottomTabsParamList;
   component: ComponentType<any>;
@@ -48,22 +56,22 @@ type TabConfig = {
 
 const TAB_CONFIG: TabConfig[] = [
   {
-    name: 'Movies',
+    name: ScreenStacks.Movies,
     component: MoviesStack,
     icon: AppIconName.homeTab,
-    label: 'Movies',
+    label: ScreenStacks.Movies,
   },
   {
-    name: 'Favourites',
+    name: ScreenStacks.Favourites,
     component: FavouritesStack,
-    icon: AppIconName.user, // You can change this to a heart icon if available
-    label: 'Favourites',
+    icon: AppIconName.user,
+    label: ScreenStacks.Favourites,
   },
   {
-    name: 'Search',
+    name: ScreenStacks.Search,
     component: SearchStack,
     icon: AppIconName.filter,
-    label: 'Search',
+    label: ScreenStacks.Search,
   },
 ];
 

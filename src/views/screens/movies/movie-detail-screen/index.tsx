@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  ActivityIndicator,
-  ScrollView as RNScrollView,
-} from 'react-native';
+import { View, ActivityIndicator, ScrollView } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import {
   useMovieDetails,
@@ -101,7 +97,7 @@ export const MovieDetailScreen = ({
   const backdropUrl = getImageUrl(movie.backdrop_path, 'w780');
 
   return (
-    <RNScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false}>
       {backdropUrl && (
         <BackdropContainer>
           <BgImage source={{ uri: backdropUrl }} resizeMode="cover" />
@@ -212,6 +208,6 @@ export const MovieDetailScreen = ({
           onClose={() => setShowVideoPlayer(false)}
         />
       )}
-    </RNScrollView>
+    </ScrollView>
   );
 };

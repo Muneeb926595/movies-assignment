@@ -49,6 +49,7 @@ export const MoviesScreen = () => {
           initialNumToRender={4}
           maxToRenderPerBatch={4}
           windowSize={2}
+          removeClippedSubviews
           data={nowPlaying?.results.slice(0, 10) || []}
           renderItem={({ item, index }) => (
             <NowShowingMovieCard item={item} index={index} />
@@ -78,6 +79,7 @@ export const MoviesScreen = () => {
           initialNumToRender={5}
           maxToRenderPerBatch={5}
           windowSize={4}
+          removeClippedSubviews
           keyExtractor={item => item.id.toString()}
           renderItem={({ item, index }) => (
             <PopularMovieCard item={item} index={index} />
@@ -92,7 +94,7 @@ export const MoviesScreen = () => {
       <Header>
         <MenuButton>
           <AppIcon
-            name={AppIconName.homeTab}
+            name={AppIconName.Menu}
             iconSize={AppIconSize.medium}
             color={theme.colors.text}
           />
@@ -100,7 +102,7 @@ export const MoviesScreen = () => {
         <HeaderTitle>FilmKu</HeaderTitle>
         <NotificationButton>
           <AppIcon
-            name={AppIconName.announcement}
+            name={AppIconName.Icon}
             iconSize={AppIconSize.medium}
             color={theme.colors.text}
           />

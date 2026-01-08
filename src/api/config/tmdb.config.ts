@@ -3,26 +3,6 @@ export const TMDB_CONFIG = {
 
   BASE_URL: 'https://api.themoviedb.org/3',
   IMAGE_BASE_URL: 'https://image.tmdb.org/t/p/',
-  IMAGE_SIZES: {
-    poster: {
-      small: 'w185',
-      medium: 'w342',
-      large: 'w500',
-      original: 'original',
-    },
-    backdrop: {
-      small: 'w300',
-      medium: 'w780',
-      large: 'w1280',
-      original: 'original',
-    },
-    profile: {
-      small: 'w45',
-      medium: 'w185',
-      large: 'h632',
-      original: 'original',
-    },
-  },
 };
 
 export const isApiConfigured = (): boolean => {
