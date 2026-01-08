@@ -1,4 +1,4 @@
-import { StateStorage, createJSONStorage } from 'zustand/middleware';
+import { StateStorage } from 'zustand/middleware';
 import { StorageKeys, storageService } from '../../services/storage';
 
 export const moviesStorage: StateStorage = {
@@ -9,9 +9,4 @@ export const moviesStorage: StateStorage = {
   removeItem: name => {
     storageService.removeItem(name as StorageKeys);
   },
-};
-
-export const moviesPersistConfig = {
-  name: StorageKeys.FAVOURITE_MOVIES,
-  storage: createJSONStorage(() => moviesStorage),
 };
