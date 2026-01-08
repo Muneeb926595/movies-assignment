@@ -5,7 +5,7 @@
  */
 
 import { MMKV } from 'react-native-mmkv';
-import { MMKVAdapter } from '../mmkv-adapter';
+import { MMKVAdapter } from '../../../src/services/storage/mmkv-adapter';
 
 describe('MMKVAdapter', () => {
   let mmkvAdapter: MMKVAdapter;

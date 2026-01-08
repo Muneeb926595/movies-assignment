@@ -4,7 +4,7 @@
  * Reusable test data for storage-related tests
  */
 
-import { StorageKeys } from '../../storage-service';
+import { StorageKeys } from '../../../../src/services/storage';
 
 /**
  * Sample user profile data

@@ -72,9 +72,9 @@ export const showApiErrorAlert = async (
   // handle 401 specially: clear session and prompt to login
   if (parsed?.status === 401) {
     // clear tokens and user
-    await storageService.removeItem(StorageKeys.ACCESS_TOKEN);
-    await storageService.removeItem(StorageKeys.REFRESH_TOKEN);
     try {
+      await storageService.removeItem(StorageKeys.ACCESS_TOKEN);
+      await storageService.removeItem(StorageKeys.REFRESH_TOKEN);
       // TODO: Clear user on 401
     } catch (e) {
       // ignore

@@ -72,42 +72,6 @@ jest.mock('react-native-mmkv', () => ({
   }),
 }));
 
-// Mock Unistyles to prevent nitro-modules error
-jest.mock('react-native-unistyles', () => ({
-  StyleSheet: {
-    create: styles => styles,
-    configure: jest.fn(),
-  },
-  createStyleSheet: styles => styles,
-  UnistylesRegistry: {
-    addThemes: jest.fn(),
-    addBreakpoints: jest.fn(),
-    addConfig: jest.fn(),
-  },
-  useStyles: jest.fn(() => ({
-    styles: {},
-    theme: {},
-  })),
-}));
-
-// Mock Notifee
-jest.mock('@notifee/react-native', () => ({
-  __esModule: true,
-  default: {
-    requestPermission: jest.fn(),
-    createTriggerNotification: jest.fn(),
-    cancelNotification: jest.fn(),
-    cancelAllNotifications: jest.fn(),
-    getTriggerNotifications: jest.fn(() => Promise.resolve([])),
-    createChannel: jest.fn(),
-    displayNotification: jest.fn(),
-  },
-  TriggerType: {
-    TIMESTAMP: 0,
-    INTERVAL: 1,
-  },
-}));
-
 // Mock Axios
 jest.mock('axios', () => {
   const mockAxiosInstance = {
