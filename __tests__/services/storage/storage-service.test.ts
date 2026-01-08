@@ -5,7 +5,10 @@
  * Follows AAA pattern (Arrange, Act, Assert).
  */
 
-import { StorageService, StorageKeys } from '../../../src/services/storage/storage-service';
+import {
+  StorageService,
+  StorageKeys,
+} from '../../../src/services/storage/storage-service';
 import { StorageAdapter } from '../../../src/services/storage/storage-adapter';
 
 describe('StorageService', () => {

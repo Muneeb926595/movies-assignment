@@ -26,7 +26,10 @@ jest.mock('../../../src/api/endpoints/movies', () => ({
 }));
 
 import { moviesRepository } from '../../../src/repository/movies';
-import { moviesEndpoints, getImageUrl } from '../../../src/api/endpoints/movies';
+import {
+  moviesEndpoints,
+  getImageUrl,
+} from '../../../src/api/endpoints/movies';
 import {
   MoviesResponse,
   MovieDetails,

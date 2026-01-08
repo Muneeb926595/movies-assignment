@@ -5,7 +5,10 @@
  */
 
 import { Alert } from 'react-native';
-import { parseApiError, showApiErrorAlert } from '../../../src/services/error-handler';
+import {
+  parseApiError,
+  showApiErrorAlert,
+} from '../../../src/services/error-handler';
 import { storageService, StorageKeys } from '../../../src/services/storage';
 
 // Mock dependencies
