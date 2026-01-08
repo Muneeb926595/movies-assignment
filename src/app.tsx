@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './utils/ignore-warnings';
 import { useRozeniteLogger } from './utils/rozenite-logger';
 import {
   initialWindowMetrics,
