@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
-import { Layout } from '../../../../globals';
+import { Layout } from '../../../../theme';
 import FastImage from '@d11/react-native-fast-image';
 
 const { width } = Dimensions.get('window');

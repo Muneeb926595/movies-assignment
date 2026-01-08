@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import FastImage from '@d11/react-native-fast-image';
 import Animated from 'react-native-reanimated';
-import { Layout } from '../../../../../globals';
+import { Layout } from '../../../../../theme';
 
 export const DurationRow = styled.View`
   flex-direction: row;

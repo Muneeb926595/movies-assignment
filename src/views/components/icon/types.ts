@@ -1,5 +1,5 @@
 import { StyleProp, ViewStyle } from 'react-native';
-import { Layout } from '../../../globals';
+import { Layout } from '../../../theme';
 
 export type Props = {
   name: AppIconName;

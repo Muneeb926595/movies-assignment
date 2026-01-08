@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
-import { Layout } from '../../../globals';
-import { Colors } from '../../../theme';
+import { Layout, Colors } from '../../../theme';
 
 const getIconOptions = () => {
   return {

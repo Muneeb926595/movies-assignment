@@ -23,7 +23,7 @@ import {
 } from './styles';
 import { PopularMovieCard } from '../components/popluar-movie-card';
 import { NowShowingMovieCard } from '../components';
-import { Layout } from '../../../../globals';
+import { Layout } from '../../../../theme';
 
 export const MoviesScreen = () => {
   const theme = useTheme();

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import Animated from 'react-native-reanimated';
-import { Layout } from '../../../../../globals';
+import { Layout } from '../../../../../theme';
 
 export const CastCard = Animated.createAnimatedComponent(styled.View`
   width: ${Layout.widthPercentageToDP(25)}px;

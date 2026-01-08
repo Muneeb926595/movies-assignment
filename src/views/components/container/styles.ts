@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Layout } from '../../../globals';
+import { Layout } from '../../../theme';
 
 export const ScreenContainer = styled(SafeAreaView)`
   flex: 1;

@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { Layout } from '../../../globals';
+import { Layout } from '../../../theme';
 
 export const DividerContainer = styled.View`
   height: ${Layout.heightPercentageToDP(0.1)}px;

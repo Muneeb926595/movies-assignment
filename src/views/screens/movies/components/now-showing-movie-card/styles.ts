@@ -2,7 +2,7 @@ import FastImage from '@d11/react-native-fast-image';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import Animated from 'react-native-reanimated';
-import { Layout } from '../../../../../globals';
+import { Layout } from '../../../../../theme';
 
 const { width } = Dimensions.get('window');
 const POSTER_WIDTH = (width - 48) / 2.5;

@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MainBottomTabsParamList, MainStackParamList } from '../types';
 import { ComponentType } from 'react';
 import { useTheme } from 'styled-components/native';
-import { Layout } from '../../globals';
+import { Layout } from '../../theme';
 import { AppIcon } from '../../views/components';
 import { AppIconName, AppIconSize } from '../../views/components/icon/types';
 import {
