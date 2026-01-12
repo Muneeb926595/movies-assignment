@@ -9,40 +9,23 @@ import {
 import { ScreenProps } from '../../../../navigation/types';
 import { getImageUrl } from '../../../../api/endpoints/movies';
 import { useMoviesStore } from '../../../../stores';
-import { AppIcon, VideoPlayer } from '../../../components';
-import { AppIconName, AppIconSize } from '../../../components/icon/types';
-import { formatRating } from '../../../components/movie-card/utils';
+import { VideoPlayer } from '../../../components';
 import {
   CenterContent,
-  BackdropContainer,
-  BackdropOverlay,
-  BackButton,
-  FavouriteButton,
-  PlayButtonContainer,
-  PlayButton,
-  PlayButtonText,
-  PlayButtonLabel,
   ContentContainer,
-  Title,
-  InfoRow,
-  RatingContainer,
-  Rating,
-  GenresContainer,
-  GenreChip,
-  GenreText,
-  DetailsRow,
-  DetailItem,
-  DetailLabel,
-  DetailValue,
   Section,
   SectionHeader,
   SectionTitle,
   SeeMore,
   Overview,
   ErrorText,
-  BgImage,
 } from './styles';
-import { MovieCastCard } from '../components';
+import {
+  MovieCastCard,
+  MovieHeader,
+  MovieInfo,
+  MovieStats,
+} from '../components';
 import { List } from '../../../components';
 import { getTrailer } from './utils';
 
@@ -93,85 +76,32 @@ export const MovieDetailScreen = ({
   }
 
   const backdropUrl = getImageUrl(movie.backdrop_path, 'w780');
+  const isFav = isFavourite(movieId);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {backdropUrl && (
-        <BackdropContainer>
-          <BgImage source={{ uri: backdropUrl }} resizeMode="cover" />
-          <BackdropOverlay />
-
-          <BackButton onPress={() => navigation.goBack()}>
-            <AppIcon
-              name={AppIconName.leftArrow}
-              iconSize={AppIconSize.medium}
-              color={theme.colors.white}
-            />
-          </BackButton>
-
-          <FavouriteButton onPress={handleToggleFavourite}>
-            <AppIcon
-              name={
-                isFavourite(movieId) ? AppIconName.heartbeat : AppIconName.plus
-              }
-              iconSize={AppIconSize.medium}
-              color={
-                isFavourite(movieId) ? theme.colors.primary : theme.colors.white
-              }
-            />
-          </FavouriteButton>
-
-          {trailer && (
-            <PlayButtonContainer>
-              <PlayButton onPress={() => setShowVideoPlayer(true)}>
-                <PlayButtonText>▶</PlayButtonText>
-              </PlayButton>
-              <PlayButtonLabel>Play Trailer</PlayButtonLabel>
-            </PlayButtonContainer>
-          )}
-        </BackdropContainer>
+        <MovieHeader
+          backdropUrl={backdropUrl}
+          isFavourite={isFav}
+          hasTrailer={!!trailer}
+          onBack={() => navigation.goBack()}
+          onToggleFavourite={handleToggleFavourite}
+          onPlayTrailer={() => setShowVideoPlayer(true)}
+        />
       )}
 
       <ContentContainer>
-        <Title>{movie.title}</Title>
+        <MovieInfo
+          title={movie.title}
+          voteAverage={movie.vote_average}
+          genres={movie.genres}
+        />
 
-        <InfoRow>
-          <RatingContainer>
-            <AppIcon
-              name={AppIconName.tag}
-              iconSize={AppIconSize.small}
-              color={theme.colors.primary}
-            />
-            <Rating>{formatRating(movie.vote_average)}/10 IMDb</Rating>
-          </RatingContainer>
-        </InfoRow>
-
-        {movie.genres && movie.genres.length > 0 && (
-          <GenresContainer>
-            {movie.genres.slice(0, 3).map(genre => (
-              <GenreChip key={genre.id}>
-                <GenreText>{genre.name}</GenreText>
-              </GenreChip>
-            ))}
-          </GenresContainer>
-        )}
-
-        <DetailsRow>
-          <DetailItem>
-            <DetailLabel>Length</DetailLabel>
-            <DetailValue>
-              {movie.runtime ? `${movie.runtime}min` : 'N/A'}
-            </DetailValue>
-          </DetailItem>
-          <DetailItem>
-            <DetailLabel>Language</DetailLabel>
-            <DetailValue>{movie.original_language.toUpperCase()}</DetailValue>
-          </DetailItem>
-          <DetailItem>
-            <DetailLabel>Rating</DetailLabel>
-            <DetailValue>PG-13</DetailValue>
-          </DetailItem>
-        </DetailsRow>
+        <MovieStats
+          runtime={movie.runtime}
+          language={movie.original_language}
+        />
 
         <Section>
           <SectionTitle>Description</SectionTitle>
