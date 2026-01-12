@@ -42,8 +42,8 @@ import {
   ErrorText,
   BgImage,
 } from './styles';
-import { FlatList } from 'react-native-gesture-handler';
 import { MovieCastCard } from '../components';
+import { List } from '../../../components';
 
 export const MovieDetailScreen = ({
   route,
@@ -186,14 +186,13 @@ export const MovieDetailScreen = ({
               <SectionTitle>Cast</SectionTitle>
               <SeeMore>See more</SeeMore>
             </SectionHeader>
-            <FlatList
+            <List
               horizontal
               initialNumToRender={5}
               maxToRenderPerBatch={5}
               windowSize={5}
               data={cast.slice(0, 15)}
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item, index }) => (
+              renderItem={(item, index) => (
                 <MovieCastCard item={item} index={index} />
               )}
             />

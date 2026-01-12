@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { useSearchMovies } from '../../../../react-query/movies';
 import { useDebounce } from '../../../../hooks';
 import { MovieCard } from '../../../components/movie-card';
+import { List } from '../../../components';
 import { useMoviesStore } from '../../../../stores';
 import { AppIcon } from '../../../components';
 import { AppIconName, AppIconSize } from '../../../components/icon/types';
@@ -67,47 +68,42 @@ export const SearchScreen = (props: TabScreenProps<'Search'>) => {
         />
       </SearchContainer>
 
-      {isLoading && (
-        <LoadingContainer>
-          <ActivityIndicator size="large" color={theme.colors.primary} />
-        </LoadingContainer>
+      {searchQuery.length > 0 && data?.total_results !== undefined && (
+        <ResultsText>Found {data.total_results} results</ResultsText>
       )}
 
-      {!isLoading && searchQuery.length > 0 && data && (
-        <>
-          <ResultsText>Found {data.total_results} results</ResultsText>
-          <FlatList
-            data={data.results}
-            keyExtractor={item => item.id.toString()}
-            numColumns={2}
-            columnWrapperStyle={Row}
-            renderItem={({ item }) => (
-              <CardWrapper>
-                <MovieCard
-                  movie={item}
-                  onPress={handleMoviePress}
-                  isFavourite={isFavourite(item.id)}
-                  onToggleFavourite={handleToggleFavourite}
-                />
-              </CardWrapper>
-            )}
-            contentContainerStyle={ListContent}
-            showsVerticalScrollIndicator={false}
-          />
-        </>
-      )}
-
-      {!isLoading && searchQuery.length === 0 && (
-        <EmptyContainer>
-          <EmptyText>Search for your favorite movies</EmptyText>
-        </EmptyContainer>
-      )}
-
-      {!isLoading && searchQuery.length > 0 && data?.results.length === 0 && (
-        <EmptyContainer>
-          <EmptyText>No movies found for "{searchQuery}"</EmptyText>
-        </EmptyContainer>
-      )}
+      <List
+        data={searchQuery.length > 0 ? data?.results : []}
+        keyExtractor={item => item.id.toString()}
+        numColumns={2}
+        columnWrapperStyle={Row}
+        renderItem={item => (
+          <CardWrapper>
+            <MovieCard
+              movie={item}
+              onPress={handleMoviePress}
+              isFavourite={isFavourite(item.id)}
+              onToggleFavourite={handleToggleFavourite}
+            />
+          </CardWrapper>
+        )}
+        contentContainerStyle={ListContent}
+        ListEmptyComponent={
+          isLoading ? (
+            <LoadingContainer>
+              <ActivityIndicator size="large" color={theme.colors.primary} />
+            </LoadingContainer>
+          ) : searchQuery.length === 0 ? (
+            <EmptyContainer>
+              <EmptyText>Search for your favorite movies</EmptyText>
+            </EmptyContainer>
+          ) : (
+            <EmptyContainer>
+              <EmptyText>No movies found for "{searchQuery}"</EmptyText>
+            </EmptyContainer>
+          )
+        }
+      />
     </Container>
   );
 };

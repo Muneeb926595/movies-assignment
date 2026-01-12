@@ -5,6 +5,7 @@ export * from './custom-image';
 export * from './divider';
 export * from './error-boundary';
 export * from './icon';
+export * from './list';
 export * from './text';
 export * from './toast';
 export * from './video-player';

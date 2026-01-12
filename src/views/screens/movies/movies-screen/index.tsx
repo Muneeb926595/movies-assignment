@@ -1,11 +1,10 @@
 import React from 'react';
-import { FlatList } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import {
   useNowPlayingMovies,
   usePopularMovies,
 } from '../../../../react-query/movies';
-import { AppIcon } from '../../../components';
+import { AppIcon, List } from '../../../components';
 import { AppIconName, AppIconSize } from '../../../components/icon/types';
 import {
   Container,
@@ -41,24 +40,24 @@ export const MoviesScreen = () => {
         </SeeMoreButton>
       </SectionHeader>
 
-      {loadingNowPlaying ? (
-        <Loader size="large" color={theme.colors.primary} />
-      ) : (
-        <FlatList
-          horizontal
-          initialNumToRender={4}
-          maxToRenderPerBatch={4}
-          windowSize={2}
-          removeClippedSubviews
-          data={nowPlaying?.results.slice(0, 10) || []}
-          renderItem={({ item, index }) => (
-            <NowShowingMovieCard item={item} index={index} />
-          )}
-          keyExtractor={item => item.id.toString()}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingLeft: Layout.RFValue(4) }}
-        />
-      )}
+      <List
+        horizontal
+        initialNumToRender={4}
+        maxToRenderPerBatch={4}
+        windowSize={2}
+        removeClippedSubviews
+        data={nowPlaying?.results.slice(0, 10) || []}
+        renderItem={(item, index) => (
+          <NowShowingMovieCard item={item} index={index} />
+        )}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={{ paddingLeft: Layout.RFValue(4) }}
+        ListEmptyComponent={
+          loadingNowPlaying ? (
+            <Loader size="large" color={theme.colors.primary} />
+          ) : null
+        }
+      />
     </Section>
   );
 
@@ -71,21 +70,22 @@ export const MoviesScreen = () => {
         </SeeMoreButton>
       </SectionHeader>
 
-      {loadingPopular ? (
-        <Loader size="large" color={theme.colors.primary} />
-      ) : (
-        <FlatList
-          data={popular?.results}
-          initialNumToRender={5}
-          maxToRenderPerBatch={5}
-          windowSize={4}
-          removeClippedSubviews
-          keyExtractor={item => item.id.toString()}
-          renderItem={({ item, index }) => (
-            <PopularMovieCard item={item} index={index} />
-          )}
-        />
-      )}
+      <List
+        data={popular?.results}
+        initialNumToRender={5}
+        maxToRenderPerBatch={5}
+        windowSize={4}
+        removeClippedSubviews
+        keyExtractor={item => item.id.toString()}
+        renderItem={(item, index) => (
+          <PopularMovieCard item={item} index={index} />
+        )}
+        ListEmptyComponent={
+          loadingPopular ? (
+            <Loader size="large" color={theme.colors.primary} />
+          ) : null
+        }
+      />
     </Section>
   );
 
@@ -110,7 +110,7 @@ export const MoviesScreen = () => {
         </NotificationButton>
       </Header>
 
-      <FlatList
+      <List
         data={[]}
         renderItem={() => <></>}
         ListHeaderComponent={RenderNowShowingSection}

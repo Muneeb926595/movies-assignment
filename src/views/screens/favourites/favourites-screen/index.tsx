@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { FlatList } from 'react-native';
 import { useMoviesStore } from '../../../../stores';
 import { TabScreenProps } from '../../../../navigation/types';
 import { MovieCard } from '../../../components/movie-card';
+import { List } from '../../../components';
 import { usePopularMovies } from '../../../../react-query/movies';
 import {
   Container,
@@ -37,33 +37,31 @@ export const FavouritesScreen = (props: TabScreenProps<'Favourites'>) => {
     <Container>
       <Header>Favourites</Header>
 
-      {favouriteMovies.length === 0 ? (
-        <EmptyContainer>
-          <EmptyText>No favourite movies yet</EmptyText>
-          <EmptySubtext>
-            Add movies to your favourites to see them here
-          </EmptySubtext>
-        </EmptyContainer>
-      ) : (
-        <FlatList
-          data={favouriteMovies}
-          keyExtractor={item => item.id.toString()}
-          numColumns={2}
-          columnWrapperStyle={Row}
-          renderItem={({ item }) => (
-            <CardWrapper>
-              <MovieCard
-                movie={item}
-                onPress={handleMoviePress}
-                isFavourite={true}
-                onToggleFavourite={handleToggleFavourite}
-              />
-            </CardWrapper>
-          )}
-          contentContainerStyle={ListContent}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+      <List
+        data={favouriteMovies}
+        keyExtractor={item => item.id.toString()}
+        numColumns={2}
+        columnWrapperStyle={Row}
+        renderItem={item => (
+          <CardWrapper>
+            <MovieCard
+              movie={item}
+              onPress={handleMoviePress}
+              isFavourite={true}
+              onToggleFavourite={handleToggleFavourite}
+            />
+          </CardWrapper>
+        )}
+        contentContainerStyle={ListContent}
+        ListEmptyComponent={
+          <EmptyContainer>
+            <EmptyText>No favourite movies yet</EmptyText>
+            <EmptySubtext>
+              Add movies to your favourites to see them here
+            </EmptySubtext>
+          </EmptyContainer>
+        }
+      />
     </Container>
   );
 };
