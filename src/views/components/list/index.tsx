@@ -36,7 +36,9 @@ export const List = <T,>({
       keyExtractor={keyExtractor}
       horizontal={horizontal}
       numColumns={horizontal ? undefined : numColumns}
-      columnWrapperStyle={numColumns > 1 && !horizontal ? columnWrapperStyle : undefined}
+      columnWrapperStyle={
+        numColumns > 1 && !horizontal ? columnWrapperStyle : undefined
+      }
       contentContainerStyle={contentContainerStyle}
       showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}

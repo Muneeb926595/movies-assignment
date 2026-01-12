@@ -4,6 +4,7 @@ import { TabScreenProps } from '../../../../navigation/types';
 import { MovieCard } from '../../../components/movie-card';
 import { List } from '../../../components';
 import { usePopularMovies } from '../../../../react-query/movies';
+import { getFavouriteMovies } from './utils';
 import {
   Container,
   Header,
@@ -20,10 +21,10 @@ export const FavouritesScreen = (props: TabScreenProps<'Favourites'>) => {
 
   const { data: popularMovies } = usePopularMovies(1);
 
-  const favouriteMovies = useMemo(() => {
-    if (!popularMovies?.results) return [];
-    return popularMovies.results.filter(movie => isFavourite(movie.id));
-  }, [popularMovies, favourites]);
+  const favouriteMovies = useMemo(
+    () => getFavouriteMovies(popularMovies?.results, isFavourite),
+    [popularMovies, favourites],
+  );
 
   const handleMoviePress = (movieId: number) => {
     props.navigation.navigate('MovieDetailScreen', { movieId });

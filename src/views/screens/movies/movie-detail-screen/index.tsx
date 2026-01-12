@@ -44,6 +44,7 @@ import {
 } from './styles';
 import { MovieCastCard } from '../components';
 import { List } from '../../../components';
+import { getTrailer } from './utils';
 
 export const MovieDetailScreen = ({
   route,
@@ -61,10 +62,7 @@ export const MovieDetailScreen = ({
     useMoviesStore();
 
   // Get the first YouTube trailer
-  const trailer =
-    videos?.find(
-      video => video.type === 'Trailer' && video.site === 'YouTube',
-    ) || videos?.[0];
+  const trailer = getTrailer(videos);
 
   const handleToggleFavourite = () => {
     if (isFavourite(movieId)) {
