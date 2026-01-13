@@ -3,6 +3,7 @@ import { useTheme } from 'styled-components/native';
 import {
   useNowPlayingMovies,
   usePopularMovies,
+  useInfiniteRecentArticles,
 } from '../../../../react-query/movies';
 import { AppIcon, List } from '../../../components';
 import { AppIconName, AppIconSize } from '../../../components/icon/types';
@@ -30,6 +31,22 @@ export const MoviesScreen = () => {
   const { data: nowPlaying, isLoading: loadingNowPlaying } =
     useNowPlayingMovies(1);
   const { data: popular, isLoading: loadingPopular } = usePopularMovies(1);
+  const {
+    data: recentArticles,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: loadingRecentArticles,
+  } = useInfiniteRecentArticles();
+
+  const recentArticlesData =
+    recentArticles?.pages.flatMap(page => page.results) || [];
+
+  const onRecentArticlesEndReached = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
 
   const RenderNowShowingSection = (
     <Section>
@@ -89,6 +106,38 @@ export const MoviesScreen = () => {
     </Section>
   );
 
+  const RenderRecentArticlesSection = (
+    <Section>
+      <SectionHeader>
+        <SectionTitle>Most Recent Articles</SectionTitle>
+      </SectionHeader>
+
+      <List
+        data={recentArticlesData}
+        initialNumToRender={10}
+        maxToRenderPerBatch={10}
+        windowSize={5}
+        removeClippedSubviews
+        keyExtractor={item => item.id.toString()}
+        renderItem={(item, index) => (
+          <PopularMovieCard item={item} index={index} />
+        )}
+        onEndReached={onRecentArticlesEndReached}
+        onEndReachedThreshold={0.5}
+        ListEmptyComponent={
+          loadingRecentArticles ? (
+            <Loader size="large" color={theme.colors.primary} />
+          ) : null
+        }
+        ListFooterComponent={
+          isFetchingNextPage ? (
+            <Loader size="small" color={theme.colors.primary} />
+          ) : null
+        }
+      />
+    </Section>
+  );
+
   return (
     <Container>
       <Header>
@@ -114,7 +163,12 @@ export const MoviesScreen = () => {
         data={[]}
         renderItem={() => <></>}
         ListHeaderComponent={RenderNowShowingSection}
-        ListFooterComponent={RenderPopularMoviesSection}
+        ListFooterComponent={
+          <>
+            {RenderPopularMoviesSection}
+            {RenderRecentArticlesSection}
+          </>
+        }
       />
     </Container>
   );

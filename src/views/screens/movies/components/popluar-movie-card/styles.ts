@@ -1,7 +1,14 @@
 import styled from 'styled-components/native';
-import FastImage from '@d11/react-native-fast-image';
 import Animated from 'react-native-reanimated';
 import { Layout } from '../../../../../theme';
+
+export const AnimatedCardWrapper = Animated.View;
+
+export const popularCardContainerStyle = {
+  padding: Layout.widthPercentageToDP(2.4),
+  borderRadius: Layout.widthPercentageToDP(3),
+  marginBottom: Layout.widthPercentageToDP(3),
+};
 
 export const DurationRow = styled.View`
   flex-direction: row;
@@ -14,6 +21,7 @@ export const Duration = styled.Text`
   color: ${props => props.theme.colors.muted};
   font-family: ${props => props.theme.fonts.latoRegular.fontFamily};
 `;
+
 export const GenresRow = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
@@ -34,22 +42,6 @@ export const GenreText = styled.Text`
   font-weight: 600;
   color: ${props => props.theme.colors.primary};
   font-family: ${props => props.theme.fonts.latoSemiBold.fontFamily};
-`;
-
-export const PopularCard =
-  Animated.createAnimatedComponent(styled.TouchableOpacity`
-    flex-direction: row;
-    padding: ${Layout.widthPercentageToDP(2.4)}px;
-    border-radius: ${Layout.widthPercentageToDP(3)}px;
-    margin-bottom: ${Layout.widthPercentageToDP(3)}px;
-    background-color: ${props => props.theme.colors.surface[50]};
-  `);
-
-export const PopularPoster = styled(FastImage)`
-  width: ${Layout.widthPercentageToDP(25)}px;
-  height: ${Layout.widthPercentageToDP(37.5)}px;
-  border-radius: ${Layout.widthPercentageToDP(2)}px;
-  margin-right: ${Layout.widthPercentageToDP(3)}px;
 `;
 
 export const PopularInfo = styled.View`

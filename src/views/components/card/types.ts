@@ -8,9 +8,12 @@ export interface BaseCardProps {
   imagePlaceholder?: ReactNode;
   topRightAction?: ReactNode;
   bottomContent?: ReactNode;
+  rightContent?: ReactNode;
   onPress?: () => void;
   width?: number;
   imageHeight?: number;
+  imageWidth?: number;
   style?: StyleProp<ViewStyle>;
   activeOpacity?: number;
+  containerStyle?: StyleProp<ViewStyle>;
 }

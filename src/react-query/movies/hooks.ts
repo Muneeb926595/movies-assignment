@@ -1,4 +1,8 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import {
+  useQuery,
+  UseQueryResult,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 import { Cast, MovieDetails, MoviesResponse, Video } from '../../types';
 import { MOVIES_QUERY_KEYS } from './keys';
 import { moviesRepository } from '../../repository';
@@ -104,6 +108,23 @@ export const useSimilarMovies = (
     queryFn: () => moviesRepository.getSimilarMovies(movieId, page),
     enabled: enabled && movieId > 0,
     staleTime: 1000 * 60 * 20, // 20 minutes - similar movies are fairly stable
+    gcTime: 1000 * 60 * 60, // 1 hour cache
+  });
+};
+
+export const useInfiniteRecentArticles = () => {
+  return useInfiniteQuery({
+    queryKey: MOVIES_QUERY_KEYS.recentArticles(),
+    queryFn: ({ pageParam = 1 }) =>
+      moviesRepository.getUpcomingMovies(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: lastPage => {
+      if (lastPage.page < lastPage.total_pages) {
+        return lastPage.page + 1;
+      }
+      return undefined;
+    },
+    staleTime: 1000 * 60 * 15, // 15 minutes
     gcTime: 1000 * 60 * 60, // 1 hour cache
   });
 };

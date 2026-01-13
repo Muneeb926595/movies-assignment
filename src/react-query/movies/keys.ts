@@ -18,4 +18,5 @@ export const MOVIES_QUERY_KEYS = {
     [...MOVIES_QUERY_KEYS.all, 'videos', movieId] as const,
   similar: (movieId: number, page: number) =>
     [...MOVIES_QUERY_KEYS.all, 'similar', movieId, page] as const,
+  recentArticles: () => [...MOVIES_QUERY_KEYS.all, 'recentArticles'] as const,
 };
