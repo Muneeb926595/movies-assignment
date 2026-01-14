@@ -1,3 +1,4 @@
+export { NowShowingMovieCardSkeleton } from './skeleton';
 import { getImageUrl } from '../../../../../api';
 import { navigationRef } from '../../../../../navigation';
 import { Movie } from '../../../../../types';

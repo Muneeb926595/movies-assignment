@@ -1,3 +1,4 @@
+export { PopularMovieCardSkeleton } from './skeleton';
 import { useTheme } from 'styled-components/native';
 import { getImageUrl } from '../../../../../api';
 import { Movie } from '../../../../../types';

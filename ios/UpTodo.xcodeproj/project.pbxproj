@@ -27,6 +27,7 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		771683FA728D4F97BA6393D0 /* evilicon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CAA8E375289E46D8A33DBB02 /* evilicon.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8C14CD9F413B4FEC87E10356 /* UpTodo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 171ABCE501844569AF366086 /* UpTodo.ttf */; };
 		96C4DF2DB5A24E319AF953C0 /* antdesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E63AE212B4DB4DEC9C76006B /* antdesign.ttf */; };
 		C227656C243B120241338C67 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		CA24343C8D6A4AB290866B45 /* octicon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D5D1F56470D405A9EF8E155 /* octicon.ttf */; };
@@ -34,7 +35,6 @@
 		E534FD4F9E4048B38F6617E2 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC31042CB6A84C9B9F47B705 /* Lato-BlackItalic.ttf */; };
 		EC721E94221F461AAB1CA2A2 /* font-awesome-5.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BF8D52B53E44EBD80D16382 /* font-awesome-5.ttf */; };
 		FA25E3E4AD804D67B1211D1F /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6217A9427D3A40B7B1C6D418 /* Lato-Regular.ttf */; };
-		8C14CD9F413B4FEC87E10356 /* UpTodo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 171ABCE501844569AF366086 /* UpTodo.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +44,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = UpTodo/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = UpTodo/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = UpTodo/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		171ABCE501844569AF366086 /* UpTodo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = UpTodo.ttf; path = ../src/assets/fonts/UpTodo.ttf; sourceTree = "<group>"; };
 		2A343B113403400D87F77242 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-BoldItalic.ttf"; path = "../src/assets/fonts/Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-UpTodo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UpTodo.debug.xcconfig"; path = "Target Support Files/Pods-UpTodo/Pods-UpTodo.debug.xcconfig"; sourceTree = "<group>"; };
 		43784305035E496CA7C19261 /* ionicon.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ionicon.ttf; path = ../src/assets/fonts/ionicon.ttf; sourceTree = "<group>"; };
@@ -71,7 +72,6 @@
 		F3BC91972206429E918260BB /* simple-line-icon.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "simple-line-icon.ttf"; path = "../src/assets/fonts/simple-line-icon.ttf"; sourceTree = "<group>"; };
 		F9F83082FD3548548BB83F94 /* Lato-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Thin.ttf"; path = "../src/assets/fonts/Lato-Thin.ttf"; sourceTree = "<group>"; };
 		FBF305E7372C4EF0B85CE23D /* font-awesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "font-awesome.ttf"; path = "../src/assets/fonts/font-awesome.ttf"; sourceTree = "<group>"; };
-		171ABCE501844569AF366086 /* UpTodo.ttf */ = {isa = PBXFileReference; name = "UpTodo.ttf"; path = "../src/assets/fonts/UpTodo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

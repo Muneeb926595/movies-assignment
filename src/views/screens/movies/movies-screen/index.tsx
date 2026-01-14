@@ -21,9 +21,14 @@ import {
   SeeMoreButton,
   SeeMoreText,
 } from './styles';
-import { PopularMovieCard } from '../components/popluar-movie-card';
-import { NowShowingMovieCard } from '../components';
-import { Layout } from '../../../../theme';
+import {
+  PopularMovieCard,
+  PopularMovieCardSkeleton,
+} from '../components/popluar-movie-card';
+import {
+  NowShowingMovieCard,
+  NowShowingMovieCardSkeleton,
+} from '../components';
 
 export const MoviesScreen = () => {
   const theme = useTheme();
@@ -68,10 +73,13 @@ export const MoviesScreen = () => {
           <NowShowingMovieCard item={item} index={index} />
         )}
         keyExtractor={item => item.id.toString()}
-        contentContainerStyle={{ paddingLeft: Layout.RFValue(4) }}
         ListEmptyComponent={
           loadingNowPlaying ? (
-            <Loader size="large" color={theme.colors.primary} />
+            <>
+              {[...Array(4)].map((_, idx) => (
+                <NowShowingMovieCardSkeleton key={idx} />
+              ))}
+            </>
           ) : null
         }
       />
@@ -126,7 +134,11 @@ export const MoviesScreen = () => {
         onEndReachedThreshold={0.5}
         ListEmptyComponent={
           loadingRecentArticles ? (
-            <Loader size="large" color={theme.colors.primary} />
+            <>
+              {[...Array(5)].map((_, idx) => (
+                <PopularMovieCardSkeleton key={idx} />
+              ))}
+            </>
           ) : null
         }
         ListFooterComponent={

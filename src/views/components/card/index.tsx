@@ -9,6 +9,7 @@ import {
   BottomContentContainer,
   RightContentContainer,
 } from './styles';
+import { CardSkeleton } from './skeleton';
 
 export const Card: React.FC<BaseCardProps> = ({
   imageUrl,
@@ -24,9 +25,24 @@ export const Card: React.FC<BaseCardProps> = ({
   style,
   containerStyle,
   activeOpacity = 0.8,
+  isLoading = false,
 }) => {
   const hasImage = imageUrl || imageSource;
   const isHorizontal = !!rightContent;
+
+  if (isLoading) {
+    return (
+      <CardSkeleton
+        width={width}
+        isHorizontal={isHorizontal}
+        imageWidth={imageWidth}
+        imageHeight={imageHeight}
+        containerStyle={containerStyle}
+        style={style}
+        bottomContent={bottomContent}
+      />
+    );
+  }
 
   return (
     <CardContainer

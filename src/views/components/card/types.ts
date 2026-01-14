@@ -16,4 +16,5 @@ export interface BaseCardProps {
   style?: StyleProp<ViewStyle>;
   activeOpacity?: number;
   containerStyle?: StyleProp<ViewStyle>;
+  isLoading?: boolean;
 }

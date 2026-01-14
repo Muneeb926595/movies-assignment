@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { useSearchMovies } from '../../../../react-query/movies';
 import { useDebounce } from '../../../../hooks';
@@ -14,7 +13,6 @@ import {
   SearchContainer,
   Input,
   ResultsText,
-  LoadingContainer,
   EmptyContainer,
   EmptyText,
   ListContent,
@@ -22,6 +20,7 @@ import {
   CardWrapper,
 } from './styles';
 import { TabScreenProps } from '../../../../navigation';
+import { CardSkeleton } from '../../../components/card/skeleton';
 
 export const SearchScreen = (props: TabScreenProps<'Search'>) => {
   const theme = useTheme();
@@ -90,9 +89,11 @@ export const SearchScreen = (props: TabScreenProps<'Search'>) => {
         contentContainerStyle={ListContent}
         ListEmptyComponent={
           isLoading ? (
-            <LoadingContainer>
-              <ActivityIndicator size="large" color={theme.colors.primary} />
-            </LoadingContainer>
+            <>
+              {[...Array(6)].map(_ => (
+                <CardSkeleton isHorizontal={false} />
+              ))}
+            </>
           ) : searchQuery.length === 0 ? (
             <EmptyContainer>
               <EmptyText>Search for your favorite movies</EmptyText>
