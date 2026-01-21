@@ -1,0 +1,49 @@
+# React Native Performance Principles
+
+- Profile before optimizing—most performance issues originate from JS thread; profile JavaScript first using React DevTools Profiler, Flipper, or why-did-you-render
+- Measure before/after when applying any optimization technique—use release mode for accurate metrics (dev mode performance is misleading)
+- Prefer bottom-up/atomic state management over top-down cascading patterns
+- Use memoized selectors (`createSelector`) when deriving data from global state
+- Normalize entity state in Redux using `createEntityAdapter` for O(1) access
+- Optimization must be data-driven: measure first, optimize second
+- React Native owns the rendering lifecycle; you control composition, not repaints
+- Performance problems manifest as UI flicker and FPS drops, especially on low-end devices
+- Use `useSelector` hooks over `connect` for simpler usage patterns
+- Premature optimization can increase memory usage without measurable benefit
+- Bundle size directly impacts TTI: All imported code is loaded, parsed, and executed; Metro doesn't tree-shake; autolinking includes all native dependencies in package.json regardless of actual usage, increasing binary size and TTI
+- File size (including bundled assets like animations) directly impacts user retention; 18.7% of app uninstalls are due to storage issues
+- Layout measurement is the bottleneck: Measuring layout dominates list rendering cost
+- Virtualization is mandatory for large lists: FlatList/FlashList only render visible items + buffer
+- MUST prioritize based on user paths and business impact
+- MUST establish control plan with acceptable ranges and monitoring frequency
+- MUST automate regression detection; manual testing doesn't scale; CI must run before code merges to catch regressions early; build native apps in CI, not just run JS tests
+- Render duration and render count are primary React Native performance metrics
+- Statistical significance required to validate improvements (environment variation exists)
+- Profiling must account for measurement variation (same device, different runs differ)
+- MUST detect prewarming before measuring startup time (iOS 15+ ProcessInfo environment variable)
+- MUST use System Tracing for thread-level analysis (Android); mqt_js thread saturation indicates JS thread bottleneck
+- Consider battery consumption impact in library selection (web libraries cause extraneous CPU/memory consumption; battery drain affects both foreground and background execution)
+- OS (iOS) continuously monitors resource consumption and may throttle background activities; background activity intervals can be reduced by OS if resource usage is excessive
+- Mobile SDKs deliver performance equivalent to native applications; web libraries assume browser capabilities and constraints, leading to suboptimal mobile performance
+- Bridge communication is asynchronous, non-deterministic, and capacity-limited; each bridge call requires JSON serialization/deserialization overhead; New Architecture (JSI) enables synchronous calls, eliminating bridge serialization overhead; Bridgeless mode (RN 0.73+) removes bridge entirely
+- New Architecture (JSI) enables synchronous native-JS communication; eliminates bridge serialization overhead
+- Fabric unifies render logic in C++ for cross-platform consistency; lazily initializes Host Components for faster startup
+- TurboModules enable lazy loading and synchronous native-JS communication; type safety via Codegen
+- Bridgeless mode (RN 0.73+) removes bridge overhead entirely
+- New Architecture performance is neutral in most cases; foundation for future capabilities, not immediate speed gains
+- New Architecture uses more RAM but less CPU for large view counts (10K+ views benchmark)
+- New Architecture doesn't eliminate JS thread saturation risk; JS thread saturation still blocks UI
+- React 18 concurrent features require New Architecture
+- Bridge traffic competes with gestures, animations, and UI updates; bridge has no built-in priority queue, all traffic competes equally
+- Busy bridge during gestures/animations causes dropped frames; minimize bridge traffic during active animations
+- React Native renderer diffs props and only sends minimal updates over bridge on re-render
+- NativeDriver serializes animation once upfront; no bridge traffic during execution (limited to transform/opacity)
+- Reanimated worklets run JavaScript synchronously on UI thread (supports layout properties)
+- Gesture Handler processes gestures natively, avoiding JS thread entirely
+- JS-driven animations cannot achieve consistent 60FPS; prefer native solutions (NativeDriver/Reanimated/Gesture Handler/Skia)
+- Animation libraries must maintain 60 FPS on both JS and UI threads (measure FPS independently on each thread)
+- Skia path interpolation calculations execute on native side (C++), avoiding JS thread blocking
+- Canvas rendering bypasses React Native's standard rendering pipeline (uses own React renderer, renders on UI thread)
+- Native modules must be thin wrappers; heavy abstractions belong on JS side
+- Validation and type checking must occur before bridge calls to avoid unnecessary round-trips
+
