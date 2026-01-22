@@ -1,0 +1,89 @@
+# Dockerfile for React Native Android Build Environment
+# This image includes all dependencies needed for building React Native Android apps
+
+FROM ubuntu:22.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV ANDROID_HOME=/opt/android-sdk
+ENV PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+
+# Install basic dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    git \
+    unzip \
+    zip \
+    build-essential \
+    software-properties-common \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js 20
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
+# Install Yarn
+RUN npm install -g yarn
+
+# Install Java 17 (OpenJDK)
+RUN apt-get update && apt-get install -y openjdk-17-jdk \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Android SDK
+RUN mkdir -p ${ANDROID_HOME} && \
+    cd ${ANDROID_HOME} && \
+    wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip && \
+    unzip commandlinetools-linux-11076708_latest.zip && \
+    rm commandlinetools-linux-11076708_latest.zip && \
+    mkdir -p ${ANDROID_HOME}/cmdline-tools && \
+    mv cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest
+
+# Set PATH for Android SDK
+ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
+
+# Accept Android SDK licenses and install required packages
+RUN yes | sdkmanager --licenses || true && \
+    sdkmanager \
+    "platform-tools" \
+    "platforms;android-34" \
+    "build-tools;36.0.0" \
+    "cmdline-tools;latest" \
+    "ndk;27.1.12297006"
+
+# Install Gradle
+ENV GRADLE_VERSION=8.5
+ENV GRADLE_HOME=/opt/gradle
+ENV PATH=${PATH}:${GRADLE_HOME}/bin
+
+RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
+    unzip -q gradle-${GRADLE_VERSION}-bin.zip -d /opt && \
+    rm gradle-${GRADLE_VERSION}-bin.zip && \
+    mv /opt/gradle-${GRADLE_VERSION} ${GRADLE_HOME}
+
+# Install Fastlane for Android
+RUN gem install fastlane -NV
+
+# Create a non-root user for builds
+RUN useradd -m -s /bin/bash builder && \
+    chown -R builder:builder ${ANDROID_HOME} && \
+    chown -R builder:builder ${GRADLE_HOME}
+
+# Set working directory
+WORKDIR /workspace
+
+# Switch to non-root user
+USER builder
+
+# Verify installations
+RUN node --version && \
+    yarn --version && \
+    java -version && \
+    gradle --version && \
+    fastlane --version
+
+CMD ["/bin/bash"]

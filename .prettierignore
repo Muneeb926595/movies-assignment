@@ -1,0 +1,16 @@
+node_modules
+coverage
+build
+dist
+*.lock
+yarn.lock
+package-lock.json
+Pods
+ios/build
+android/build
+android/.gradle
+*.pbxproj
+*.xcworkspace
+*.xcodeproj
+.git
+.DS_Store

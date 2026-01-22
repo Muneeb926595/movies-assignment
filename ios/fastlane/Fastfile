@@ -1,0 +1,75 @@
+# Fastfile for iOS builds and deployments
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Build the iOS app"
+  lane :build do
+    # Ensure dependencies are installed
+    cocoapods
+    
+    # Increment build number
+    increment_build_number(
+      build_number: number_of_commits
+    )
+    
+    # Build the app
+    build_app(
+      workspace: "UpTodo.xcworkspace",
+      scheme: "UpTodo",
+      export_method: "app-store",
+      export_options: {
+        method: "app-store",
+        provisioningProfiles: {
+          ENV["BUNDLE_IDENTIFIER"] => ENV["PROVISIONING_PROFILE_NAME"]
+        }
+      },
+      output_directory: "./",
+      output_name: "UpTodo.ipa"
+    )
+  end
+
+  desc "Upload to TestFlight (Beta)"
+  lane :beta do
+    # Match certificates and provisioning profiles
+    match(type: "appstore")
+    
+    # Build the app
+    build
+    
+    # Upload to TestFlight
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      skip_submission: true,
+      distribute_external: false,
+      notify_external_testers: false
+    )
+  end
+
+  desc "Deploy to App Store"
+  lane :release do
+    # Match certificates and provisioning profiles
+    match(type: "appstore")
+    
+    # Build the app
+    build
+    
+    # Upload to App Store
+    upload_to_app_store(
+      skip_metadata: false,
+      skip_screenshots: false,
+      submit_for_review: false,
+      automatic_release: false,
+      force: true
+    )
+  end
+
+  desc "Run tests"
+  lane :test do
+    run_tests(
+      workspace: "UpTodo.xcworkspace",
+      scheme: "UpTodo",
+      device: "iPhone 15 Pro"
+    )
+  end
+end

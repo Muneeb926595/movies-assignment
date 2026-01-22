@@ -1,0 +1,46 @@
+codecov:
+  token: # Add your Codecov token here (optional)
+  notify:
+    require_ci_to_pass: yes
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+  status:
+    project:
+      default:
+        target: 70%
+        threshold: 1%
+        base: auto
+        branches:
+          - main
+          - develop
+          - master
+    patch:
+      default:
+        target: 70%
+        threshold: 1%
+        base: auto
+
+comment:
+  layout: "reach, diff, flags, files, footer"
+  behavior: default
+  require_changes: no
+
+ignore:
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/__tests__/**"
+  - "**/__mocks__/**"
+  - "**/index.ts"
+  - "**/index.tsx"
+  - "**/*.d.ts"
+  - "**/*.styles.ts"
+  - "**/*.styles.tsx"
+  - "src/globals/**"
+  - "node_modules/**"
+  - "coverage/**"
+  - "android/**"
+  - "ios/**"

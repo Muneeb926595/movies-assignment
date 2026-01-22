@@ -1,0 +1,299 @@
+name: CD Pipeline
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+env:
+  NODE_VERSION: '20'
+  JAVA_VERSION: '17'
+
+jobs:
+  version-and-changelog:
+    name: Version & Changelog
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate version and changelog
+        id: version
+        run: |
+          # Extract version from tag (e.g., v1.0.0 -> 1.0.0)
+          VERSION=${GITHUB_REF#refs/tags/v}
+          # Update package.json version
+          npm version $VERSION --no-git-tag-version --no-commit-hooks
+          # Generate changelog using standard-version (skip tag and commit since tag already exists)
+          npx standard-version --release-as $VERSION --skip.tag --skip.commit --skip.bump || true
+          # Verify version was set correctly
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "✅ Version set to: $VERSION"
+
+      - name: Commit version and changelog
+        run: |
+          git add package.json CHANGELOG.md
+          git commit -m "chore: bump version to ${{ steps.version.outputs.version }}" || exit 0
+          git push origin HEAD:${{ github.ref_name }}
+
+  build-android:
+    name: Build & Sign Android
+    needs: version-and-changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            android/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Get signing keys from secrets
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > android/app/keystore.jks
+            echo "storePassword=$KEYSTORE_PASSWORD" > android/keystore.properties
+            echo "keyPassword=$KEY_PASSWORD" >> android/keystore.properties
+            echo "keyAlias=$KEY_ALIAS" >> android/keystore.properties
+          fi
+
+      - name: Build Android App Bundle
+        working-directory: android
+        run: |
+          if [ -f app/keystore.jks ]; then
+            ./gradlew bundleRelease --no-daemon
+          else
+            echo "Warning: No signing keys found, building unsigned bundle"
+            ./gradlew bundleRelease --no-daemon
+          fi
+
+      - name: Upload Android artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release-bundle
+          path: android/app/build/outputs/bundle/release/*.aab
+          retention-days: 30
+
+      - name: Build Android APK (for Firebase App Distribution)
+        working-directory: android
+        run: |
+          if [ -f app/keystore.jks ]; then
+            ./gradlew assembleRelease --no-daemon
+          else
+            echo "Warning: No signing keys found, building unsigned APK"
+            ./gradlew assembleRelease --no-daemon
+          fi
+
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release-apk
+          path: android/app/build/outputs/apk/release/*.apk
+          retention-days: 30
+
+  build-ios:
+    name: Build & Sign iOS
+    needs: version-and-changelog
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Install CocoaPods dependencies
+        working-directory: ios
+        run: pod install
+
+      - name: Setup Fastlane
+        working-directory: ios
+        run: bundle install
+
+      - name: Build iOS with Fastlane
+        working-directory: ios
+        env:
+          FASTLANE_USER: ${{ secrets.APPLE_ID }}
+          FASTLANE_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+        run: |
+          bundle exec fastlane build
+
+      - name: Upload iOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-release-ipa
+          path: ios/*.ipa
+          retention-days: 30
+
+  distribute-android-internal:
+    name: Distribute Android (Internal)
+    needs: build-android
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag'
+    steps:
+      - name: Download Android APK
+        uses: actions/download-artifact@v4
+        with:
+          name: android-release-apk
+          path: ./artifacts
+
+      - name: Distribute to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          groups: internal-testers
+          file: ./artifacts/*.apk
+          releaseNotes: "Release ${{ needs.version-and-changelog.outputs.version }}"
+
+  distribute-ios-internal:
+    name: Distribute iOS (Internal)
+    needs: build-ios
+    runs-on: macos-latest
+    if: github.ref_type == 'tag'
+    steps:
+      - name: Download iOS IPA
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-release-ipa
+          path: ./artifacts
+
+      - name: Upload to TestFlight
+        working-directory: ios
+        env:
+          FASTLANE_USER: ${{ secrets.APPLE_ID }}
+          FASTLANE_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          bundle exec fastlane beta
+
+  deploy-android-store:
+    name: Deploy to Google Play Store
+    needs: [build-android, distribute-android-internal]
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag' && contains(github.ref, 'release')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Download Android Bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: android-release-bundle
+          path: ./artifacts
+
+      - name: Deploy to Google Play Store
+        working-directory: android
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+        run: |
+          bundle exec fastlane supply \
+            --aab ./artifacts/*.aab \
+            --track internal \
+            --skip_upload_metadata \
+            --skip_upload_images \
+            --skip_upload_screenshots
+
+  deploy-ios-store:
+    name: Deploy to Apple App Store
+    needs: [build-ios, distribute-ios-internal]
+    runs-on: macos-latest
+    if: github.ref_type == 'tag' && contains(github.ref, 'release')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Download iOS IPA
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-release-ipa
+          path: ./artifacts
+
+      - name: Deploy to App Store
+        working-directory: ios
+        env:
+          FASTLANE_USER: ${{ secrets.APPLE_ID }}
+          FASTLANE_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          bundle exec fastlane release
